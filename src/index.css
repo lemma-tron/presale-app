@@ -1,13 +1,587 @@
+/*======================
+  GENERAL
+  ======================*/
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to right, #512DA8, #711e72);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a,
+a:hover,
+a:focus,
+button {
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+a, a:active, a:focus {
+  color: #FFFFFF;
+}
+
+a:hover {
+  color: #d6cdcd;
+}
+
+p {
+  font-size: 14.4px;
+  line-height: 24px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.h1,
+h1 {
+  font-size: 36px;
+}
+
+.h2,
+h2 {
+  font-size: 30px;
+}
+
+.h3,
+h3 {
+  font-size: 24px;
+}
+
+.h4,
+h4 {
+  font-size: 18px;
+}
+
+.h5,
+h5 {
+  font-size: 14px;
+}
+
+.h6,
+h6 {
+  font-size: 12px;
+}
+
+b {
+  font-weight: 500;
+}
+
+::-moz-selection {
+  background-color: #2e3138;
+  color: #fff;
+}
+
+::selection {
+  background-color: #2e3138;
+  color: #fff;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+.alignitems-center {
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/*======================
+  NAVBAR
+  ======================*/
+
+.navbar-custom {
+  padding: 20px 0px;
+  width: 100%;
+  border-radius: 0px;
+  z-index: 999;
+  margin-bottom: 0px;
+  transition: top 0.3s;
+}
+
+.navbar-custom .navbar-brand {
+  text-transform: uppercase;
+  color: #fff !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  height: auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar-custom .navbar-nav a {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  background-color: transparent !important;
+  padding: 15px 0;
+  margin: 0 10px;
+  transition: all 0.4s;
+}
+
+.navbar-custom .navbar-nav a:hover,
+.navbar-custom .navbar-nav a:focus,
+.navbar-custom .navbar-nav a:active {
+  color: #fff;
+}
+
+.navbar-toggler {
+  border: 0;
+}
+
+.navbar-toggler:focus, .navbar-toggler:active:focus, .navbar-toggler.active:focus, .navbar-toggler.focus, .navbar-toggler:active.focus, .navbar-toggler.active.focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/*======================
+  PRESALE COUNTDOWN
+  ======================*/
+
+.presalecountdown {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.presalecountdown .title {
+  color: #FFFFFF;
+}
+
+.countdown-row {
+  width: 100%;
+  margin-top: 20px;
+  column-gap: 15px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.countdown-card {
+  display: flex;
+  padding: 8px;
+  width: 100px;
+  text-align: center;
+  border-radius: 8px;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.countdown-card .value {
+  font-size: 3em;
+}
+
+.countdown-card .value {
+  color: #FFFFFF;
+}
+
+.countdown-card .type {
+  color: #FFFFFF;
+}
+
+/*======================
+  PRESALE ACTION
+  ======================*/
+
+.presalewallet .btn {
+  width: 100%;
+  border-radius: 1.25em;
+  margin-top: 5rem !important;
+  margin-bottom: 3rem !important;
+}
+
+.presalewallet .btn:focus, .presalewallet .btn:active:focus, .presalewallet .btn.active:focus, .presalewallet .btn.focus, .presalewallet .btn:active.focus, .presalewallet .btn.active.focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.walletbtn-content {
+  align-items: center;
+  padding: 6px;
+}
+
+.connect-wallet-text {
+  font-weight: 700 !important;
+}
+
+.network-text {
+  font-size: 0.8em;
+}
+
+.presaledeposit {
+  border-radius: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.current-lema-rate {
+  text-align: right !important;
+  font-style: italic !important;
+}
+
+.presaleaction-card {
+  border-radius: 15px;
+  padding: 20px 5px 15px 5px;
+}
+
+.presale-transaction {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.presaleaction .input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding: 2px;
+}
+
+.presaleaction .input-group .frm:focus, .presaleaction .input-group .frm:active:focus, .presaleaction .input-group .frm.active:focus, .presaleaction .input-group .frm.focus, .presaleaction .input-group .frm:active.focus, .presaleaction .input-group .frm.active.focus, .presaleaction .input-group .frm:disabled {
+  outline: none !important;
+  box-shadow: none;
+  background: transparent;
+}
+
+.busd-input {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+}
+
+.lema-input {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+}
+
+.presaleaction .input-group input::placeholder {
+  font-weight: bold;
+}
+
+.presaleaction .buy-button {
+  border-radius: 30px;
+  text-align: center;
+  font-size: 12px;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.presaleaction .buy-button:focus, .presaleaction .buy-button:active:focus, .presaleaction .buy-button.active:focus, .presaleaction .buy-button.focus, .presaleaction .buy-button:active.focus, .presaleaction .buy-button.active.focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.presalewallet .btn-outline-light {
+  color: #FFFFFF;
+  background-color: #009cef;
+}
+
+.presalewallet .btn-outline-light:hover {
+  color: #FFFFFF;
+  border-color: #009cef;
+  background-color: #009cef;
+}
+
+.presalewallet .btn-outline-light:active {
+  color: #FFFFFF;
+  background-color: #009cef;
+}
+
+.presaleaction .buy-button {
+  color: #FFFFFF;
+  background-color: #3bbc01;
+}
+
+.presaleaction .buy-button:hover {
+  color: #FFFFFF;
+  background-color: #3bbc01;
+  border-color: #3bbc01;
+}
+
+.presaleaction .buy-button:active {
+  color: #FFFFFF;
+  background-color: #3bbc01;
+}
+
+.presaleaction-card {
+  background-color: rgba(122, 130, 139, 0.1);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.presaleaction .input-group {
+  border-bottom: 2px solid #FFFFFF;
+}
+
+.presaleaction .input-group input {
+  color: #FFFFFF;
+}
+
+.presaleaction .input-group input:focus {
+  color: #FFFFFF;
+}
+
+.presaleaction .input-group input::placeholder {
+  color: #FFFFFF;
+}
+
+.exchange-icon {
+  color: #FFFFFF;
+}
+
+.input-group span {
+  color: #FFFFFF;
+}
+
+.current-lema-rate {
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 768px) {
+  .exchange-icon-div {
+    margin-top: 2rem !important;
+  }
+}
+
+/*======================
+  BUSD Information
+  ======================*/
+
+.busdinformation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 100px;
+  row-gap: 60px;
+}
+
+.token-count {
+  font-size: 2em;
+}
+
+.busdcount {
+  padding: 10px;
+}
+
+.lemacount {
+  padding: 10px;
+}
+
+.busdinformation-content-2 {
+  width: 300px;
+  border-radius: 15px;
+  padding: 20px 5px 15px 5px;
+}
+
+.token-count-personal {
+  font-size: 1em;
+}
+
+.busdinformation-content-2 .claim-button {
+  border-radius: 30px;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  width: 50%;
+  margin: 10px;
+}
+
+.busdinformation-content-2 .claim-button:focus, .busdinformation-content-2 .claim-button:active:focus, .busdinformation-content-2 .claim-button.active:focus, .busdinformation-content-2 .claim-button.focus, .busdinformation-content-2 .claim-button:active.focus, .busdinformation-content-2 .claim-button.active.focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.busdinformation {
+  color: #FFFFFF;
+}
+
+.busdinformation-content-2 {
+  background-color: rgba(122, 130, 139, 0.1);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.busdinformation-content-2 .claim-button {
+  color: #FFFFFF;
+  background-color: #3bbc01;
+}
+
+.busdinformation-content-2 .claim-button:hover {
+  color: #FFFFFF;
+  background-color: #3bbc01;
+  border-color: #3bbc01;
+}
+
+.busdinformation-content-2 .claim-button:active {
+  color: #FFFFFF;
+  background-color: #3bbc01;
+}
+
+/*======================
+  Presale Information
+  ======================*/
+
+.presaleinformation {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.presaleinformation .title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.presaleinfo-image {
+  width: 40%;
+}
+
+@media screen and (max-width: 768px) {
+  .presaleinfo-image {
+    width: 90%;
+  }
+}
+
+.presaleinformation {
+  background-color: rgba(122, 130, 139, 0.1);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+  color: #FFFFFF;
+}
+
+/*======================
+  Contract Information
+  ======================*/
+
+.contractinformation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+.contract {
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.contract .address {
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.contract .address a, .contract .address a:active, .contract .address a:focus {
+  color: #009CEF;
+}
+
+.contract .address a:hover {
+  color: #0680c2;
+}
+
+.copy_address {
+  margin-left: 10px;
+  cursor: copy;
+}
+
+.contract {
+  background-color: rgba(122, 130, 139, 0.1);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.contract .title {
+  color: #FFFFFF;
+}
+
+.copy_address {
+  color: #FFFFFF;
+}
+
+.copy_address:hover {
+  color: #ffffffc5;
+}
+
+/*======================
+  Footer
+  ======================*/
+
+.footer {
+  height: 240px;
+}
+
+.footer .row {
+  justify-content: center;
+}
+
+.footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer .footerStartDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .footerStart p {
+  font-size: 16px;
+  margin-top: 26px;
+}
+
+.footer .socialLinks {
+  margin-bottom: 20px;
+}
+
+.socialLinks ul li {
+  display: inline-block;
+}
+
+footer .logo {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.copyRightArea {
+  text-align: center;
+}
+
+.footer span {
+  color: #FFFFFF;
 }

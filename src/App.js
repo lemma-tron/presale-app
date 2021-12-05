@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BusdInformation } from "./components/BusdInformation";
+import ContractInformation from "./components/ContractInformation";
+import Header from "./components/Header";
+import PresaleAction from "./components/PresaleAction";
+import PresaleCountdown from "./components/PresaleCountdown";
+import PresaleInformation from "./components/PresaleInformation";
+import Footer from "./components/Footer";
+
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <div className="content">
+        <PresaleCountdown />
+        <PresaleAction />
+        <BusdInformation />
+        <PresaleInformation />
+        <ContractInformation />
+      </div>
+      <ToastContainer />
+      <Footer />
     </div>
   );
 }
