@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import ConnectWalletButton from "./ConnectWalletButton";
 
 export default function PresaleAction() {
   const isApproved = false;
@@ -11,26 +12,7 @@ export default function PresaleAction() {
       <div className="row alignitems-center">
         <div className="col-md-3">
           <div className="presalewallet">
-            <button
-              className="btn btn-outline-light text-left"
-              type="button"
-              disabled={false}
-            >
-              <div className="row walletbtn-content">
-                <div className="col-9">
-                  <span className="connect-wallet-text">
-                    {"Connect Wallet"}
-                  </span>
-                  <br />
-                  <span className="network-text">
-                    {"Binance Smart Chain"}
-                  </span>
-                </div>
-                <div className="col-3 text-right">
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </div>
-              </div>
-            </button>
+            <ConnectWalletButton />
           </div>
         </div>
         <div className="col-md-9 presaledeposit">

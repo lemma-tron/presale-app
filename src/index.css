@@ -236,6 +236,11 @@ input[type=number] {
   font-size: 0.8em;
 }
 
+.extra-msg {
+  font-size: 0.6em;
+  font-style: italic;
+}
+
 .presaledeposit {
   border-radius: 15px;
   padding-left: 20px;
