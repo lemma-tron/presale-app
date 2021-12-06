@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -25,27 +25,43 @@ const ConnectWalletButton = () => {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: process.env.REACT_APP_INFURA_ID,
+          rpc: {
+            56: process.env.REACT_APP_RPC_URL,
+          },
+          chainId: process.env.REACT_APP_CHAIN_ID,
+        },
+      },
+      "custom-binancechainwallet": {
+        display: {
+          logo: "../assets/binance_wallet_logo.png",
+          name: "Binance Chain Wallet",
+          description: "Connect to your Binance Chain Wallet",
+        },
+        package: true,
+        connector: async () => {
+          let provider = null;
+          if (typeof window.BinanceChain !== "undefined") {
+            provider = window.BinanceChain;
+            try {
+              await provider.request({ method: "eth_requestAccounts" });
+            } catch (error) {
+              throw new Error("User Rejected");
+            }
+          } else {
+            throw new Error("No Binance Chain Wallet found");
+          }
+          return provider;
         },
       },
     };
     return providerOptions;
   };
 
-  useEffect(() => {
-    const web3Modal = new Web3Modal({
-      network: "mainnet",
-      cacheProvider: true,
-      providerOptions: getProviderOptions(),
-    });
-
-    setWeb3Modal(web3Modal);
-  }, []);
-
   const resetApp = async () => {
     if (web3 && web3.currentProvider && web3.currentProvider.close) {
       await web3.currentProvider.close();
     }
+
     await web3Modal.clearCachedProvider();
 
     setChainId(1);
@@ -62,7 +78,11 @@ const ConnectWalletButton = () => {
     }
     provider.on("close", () => resetApp());
     provider.on("accountsChanged", async (accounts) => {
-      setAddress(accounts[0]);
+      if (accounts.length <= 0) {
+        resetApp();
+      } else {
+        setAddress(accounts[0]);
+      }
     });
     provider.on("chainChanged", async (chainId) => {
       const networkId = await web3.eth.net.getId();
@@ -109,6 +129,39 @@ const ConnectWalletButton = () => {
     setAddress(address);
   };
 
+  useEffect(() => {
+    const web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions: getProviderOptions(),
+      disableInjectedProvider: false,
+    });
+
+    setWeb3Modal(web3Modal);
+  }, []);
+
+  const connectToProvider = async (web3Modal) => {
+    const provider = await web3Modal.connect();
+    const web3 = initWeb3(provider);
+    await subscribeProvider(web3, provider);
+    const accounts = await web3.eth.getAccounts();
+    const address = accounts[0];
+    const networkId = await web3.eth.net.getId();
+    const chainId = await web3.eth.chainId();
+
+    setWeb3(web3);
+    setProvider(provider);
+    setChainId(chainId);
+    setNetworkId(networkId);
+    setConnected(true);
+    setAddress(address);
+  };
+
+  useEffect(() => {
+    if (web3Modal && web3Modal.cachedProvider) {
+      connectToProvider(web3Modal);
+    }
+  }, [web3Modal]);
+
   return (
     <button
       className="btn btn-outline-light text-left"
@@ -118,11 +171,17 @@ const ConnectWalletButton = () => {
     >
       <div className="row walletbtn-content">
         <div className="col-9">
-          <span className="connect-wallet-text">{connected ? CONNECTED_MSG : CONNECT_MSG}</span>
+          <span className="connect-wallet-text">
+            {connected ? CONNECTED_MSG : CONNECT_MSG}
+          </span>
           <br />
-          <span className="network-text">{connected ? formatAddress(address) : DEFAULT_SEC_MSG}</span>
+          <span className="network-text">
+            {connected ? formatAddress(address) : DEFAULT_SEC_MSG}
+          </span>
           <br />
-          <span className="extra-msg">{connected ? "(Click here to logout)" : "(Get started)"}</span>
+          <span className="extra-msg">
+            {connected ? "(Click here to logout)" : "(Get started)"}
+          </span>
         </div>
         <div className="col-3 text-right">
           <FontAwesomeIcon icon={faArrowRight} />
