@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import formatAddress from "../libs/formatAddress";
 import { getProviderOptions } from "../libs/providers";
 
+const validChainId = process.env.REACT_APP_CHAIN_ID;
+
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
 const CONNECTED_MSG = "Connected";
+
+const CHAIN_ERROR = "Please make sure you are in Binance Smart Chain.";
 
 const ConnectWalletButton = (props) => {
   const [web3Modal, setWeb3Modal] = useState(null);
@@ -18,6 +23,14 @@ const ConnectWalletButton = (props) => {
   const [chainId, setChainId] = useState(1);
   const [networkId, setNetworkId] = useState(1);
   const [connected, setConnected] = useState(false);
+
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+    });
 
   const resetApp = async () => {
     if (web3 && web3.currentProvider && web3.currentProvider.close) {
@@ -46,10 +59,13 @@ const ConnectWalletButton = (props) => {
         props.setAccount(accounts[0]);
       }
     });
+
     provider.on("chainChanged", async (chainId) => {
-      const networkId = await web3.eth.net.getId();
       setChainId(chainId);
-      setNetworkId(networkId);
+      if (chainId != validChainId) {
+        notifyError(CHAIN_ERROR);
+        resetApp();
+      }
     });
 
     provider.on("networkChanged", async (networkId) => {
@@ -82,6 +98,14 @@ const ConnectWalletButton = (props) => {
     const account = accounts[0];
     const networkId = await web3.eth.net.getId();
     const chainId = await web3.eth.chainId();
+
+    console.log(validChainId)
+    console.log(chainId)
+
+    if (chainId != validChainId) {
+      notifyError(CHAIN_ERROR);
+      resetApp();
+    }
 
     setWeb3(web3);
     setProvider(provider);
