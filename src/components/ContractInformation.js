@@ -1,8 +1,13 @@
 import React from "react";
+import {
+  getPresaleNenAddress,
+  getPresaleNenVaultAddress,
+  getBUSDAddress,
+  getNenTokenAddress,
+} from "../libs/addressHelpers";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-
-import { toast } from "react-toastify";
 
 const bscScanUrl = "https://www.bscscan.com/address/";
 
@@ -29,16 +34,16 @@ export default function ContractInformation() {
           <div className="title">Presale Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"}
+              href={bscScanUrl + getPresaleNenAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56
+              {getPresaleNenAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56")}
+              onClick={(e) => copyAddress(e, getPresaleNenAddress())}
             />
           </div>
         </div>
@@ -46,16 +51,16 @@ export default function ContractInformation() {
           <div className="title">Presale Vault Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"}
+              href={bscScanUrl + getPresaleNenVaultAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56
+              {getPresaleNenVaultAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56")}
+              onClick={(e) => copyAddress(e, getPresaleNenVaultAddress())}
             />
           </div>
         </div>
@@ -63,16 +68,16 @@ export default function ContractInformation() {
           <div className="title">LEMA Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"}
+              href={bscScanUrl + getNenTokenAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56
+              {getNenTokenAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56")}
+              onClick={(e) => copyAddress(e, getNenTokenAddress())}
             />
           </div>
         </div>
@@ -80,16 +85,16 @@ export default function ContractInformation() {
           <div className="title">BUSD Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"}
+              href={bscScanUrl + getBUSDAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56
+              {getBUSDAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56")}
+              onClick={(e) => copyAddress(e, getBUSDAddress())}
             />
           </div>
         </div>

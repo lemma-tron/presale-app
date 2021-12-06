@@ -4,8 +4,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-import formatAddress from "../utils/formatAddress";
-import { getProviderOptions } from "../utils/providers";
+import formatAddress from "../libs/formatAddress";
+import { getProviderOptions } from "../libs/providers";
 
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
@@ -29,7 +29,7 @@ const ConnectWalletButton = (props) => {
     setChainId(1);
     setNetworkId(1);
     setConnected(false);
-    props.setAddress("");
+    props.setAccount("");
     setProvider(null);
     setWeb3(null);
   };
@@ -43,7 +43,7 @@ const ConnectWalletButton = (props) => {
       if (accounts.length <= 0) {
         resetApp();
       } else {
-        props.setAddress(accounts[0]);
+        props.setAccount(accounts[0]);
       }
     });
     provider.on("chainChanged", async (chainId) => {
@@ -79,7 +79,7 @@ const ConnectWalletButton = (props) => {
     const web3 = initWeb3(provider);
     await subscribeProvider(web3, provider);
     const accounts = await web3.eth.getAccounts();
-    const address = accounts[0];
+    const account = accounts[0];
     const networkId = await web3.eth.net.getId();
     const chainId = await web3.eth.chainId();
 
@@ -88,7 +88,7 @@ const ConnectWalletButton = (props) => {
     setChainId(chainId);
     setNetworkId(networkId);
     setConnected(true);
-    props.setAddress(address);
+    props.setAccount(account);
   };
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const ConnectWalletButton = (props) => {
     const web3 = initWeb3(provider);
     await subscribeProvider(web3, provider);
     const accounts = await web3.eth.getAccounts();
-    const address = accounts[0];
+    const account = accounts[0];
     const networkId = await web3.eth.net.getId();
     const chainId = await web3.eth.chainId();
 
@@ -115,7 +115,7 @@ const ConnectWalletButton = (props) => {
     setChainId(chainId);
     setNetworkId(networkId);
     setConnected(true);
-    props.setAddress(address);
+    props.setAccount(account);
   };
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const ConnectWalletButton = (props) => {
           </span>
           <br />
           <span className="network-text">
-            {connected ? formatAddress(props.address) : DEFAULT_SEC_MSG}
+            {connected ? formatAddress(props.account) : DEFAULT_SEC_MSG}
           </span>
           <br />
           <span className="extra-msg">

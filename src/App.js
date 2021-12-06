@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { BusdInformation } from "./components/BusdInformation";
 import ContractInformation from "./components/ContractInformation";
 import Header from "./components/Header";
@@ -10,15 +10,20 @@ import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const [address, setAddress] = useState("");
+  const [account, setAccount] = useState("");
+  const busdInformationRef = useRef();
 
   return (
     <div className="container">
       <Header />
       <div className="content">
         <PresaleCountdown />
-        <PresaleAction address={address} setAddress={setAddress} />
-        <BusdInformation />
+        <PresaleAction
+          account={account}
+          setAccount={setAccount}
+          busdInformationRef={busdInformationRef}
+        />
+        <BusdInformation account={account} ref={busdInformationRef} />
         <PresaleInformation />
         <ContractInformation />
       </div>

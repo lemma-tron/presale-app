@@ -1,21 +1,84 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { usePresaleNenPublic } from "../hooks/useContracts";
+import { convertMillistoDHMS } from "../libs/formatDateTime";
 
 const COUNTDOWN_MSG = "Presale Count down";
-// const LIVE_MSG = "Presale is live";
-// const END_MSG = "Presale has ended";
+const LIVE_MSG = "Presale is live";
+const END_MSG = "Presale has ended";
 
 export default function PresaleCountdown() {
-  // const [message, setMessage] = useState(COUNTDOWN_MSG);
-  // const [days, setDays] = useState(0);
-  // const [hours, setHours] = useState(0);
-  // const [mins, setMins] = useState(0);
-  // const [secs, setSecs] = useState(0);
+  const Ref = useRef(null);
 
-  const message = COUNTDOWN_MSG;
-  const days = 0;
-  const hours = 0;
-  const mins = 0;
-  const secs = 0;
+  const [message, setMessage] = useState(COUNTDOWN_MSG);
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [mins, setMins] = useState(0);
+  const [secs, setSecs] = useState(0);
+
+  const presaleContractPublic = usePresaleNenPublic();
+
+  const fetchContractData = async (timerStopped) => {
+    if (presaleContractPublic) {
+      if (timerStopped) {
+        presaleContractPublic.methods.endTime().call(function (err, res) {
+          const timeNow = new Date().getTime();
+          if (timeNow > res * 1000) {
+            setMessage(END_MSG);
+          } else {
+            setMessage(LIVE_MSG);
+            clearTimer(res * 1000);
+          }
+        });
+      } else {
+        presaleContractPublic.methods.startTime().call(function (err, res) {
+          clearTimer(res * 1000);
+        });
+      }
+    }
+  };
+
+  const getTimeRemaining = (deadlineMillis) => {
+    const total = deadlineMillis - new Date().getTime();
+    return convertMillistoDHMS(total);
+  };
+
+  const startTimer = (deadlineMillis) => {
+    let { millis, days, hours, minutes, seconds } =
+      getTimeRemaining(deadlineMillis);
+    if (millis >= 0) {
+      setDays(days > 9 ? days : "0" + days);
+      setHours(hours > 9 ? hours : "0" + hours);
+      setMins(minutes > 9 ? minutes : "0" + minutes);
+      setSecs(seconds > 9 ? seconds : "0" + seconds);
+    } else {
+      stopTimer();
+    }
+  };
+
+  const stopTimer = () => {
+    if (Ref.current) clearInterval(Ref.current);
+    setDays("00");
+    setHours("00");
+    setMins("00");
+    setSecs("00");
+    fetchContractData(true);
+  };
+
+  const clearTimer = (deadlineMillis) => {
+    setDays("00");
+    setHours("00");
+    setMins("00");
+    setSecs("00");
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => {
+      startTimer(deadlineMillis);
+    }, 1000);
+    Ref.current = id;
+  };
+
+  useEffect(() => {
+    fetchContractData(false);
+  }, []);
 
   return (
     <div className="presalecountdown">
