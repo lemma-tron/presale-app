@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { BusdInformation } from "./components/BusdInformation";
 import ContractInformation from "./components/ContractInformation";
 import Header from "./components/Header";
@@ -9,12 +10,14 @@ import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+  const [address, setAddress] = useState("");
+
   return (
     <div className="container">
       <Header />
       <div className="content">
         <PresaleCountdown />
-        <PresaleAction />
+        <PresaleAction address={address} setAddress={setAddress} />
         <BusdInformation />
         <PresaleInformation />
         <ContractInformation />

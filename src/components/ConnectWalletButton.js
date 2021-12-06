@@ -1,61 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import formatAddress from "../utils/formatAddress";
+import { getProviderOptions } from "../utils/providers";
 
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
 const CONNECTED_MSG = "Connected";
 
-const ConnectWalletButton = () => {
+const ConnectWalletButton = (props) => {
   const [web3Modal, setWeb3Modal] = useState(null);
   const [provider, setProvider] = useState(null);
   const [web3, setWeb3] = useState(null);
   const [chainId, setChainId] = useState(1);
   const [networkId, setNetworkId] = useState(1);
-  const [address, setAddress] = useState("");
   const [connected, setConnected] = useState(false);
-
-  const getProviderOptions = () => {
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          rpc: {
-            56: process.env.REACT_APP_RPC_URL,
-          },
-          chainId: process.env.REACT_APP_CHAIN_ID,
-        },
-      },
-      "custom-binancechainwallet": {
-        display: {
-          logo: "../assets/binance_wallet_logo.png",
-          name: "Binance Chain Wallet",
-          description: "Connect to your Binance Chain Wallet",
-        },
-        package: true,
-        connector: async () => {
-          let provider = null;
-          if (typeof window.BinanceChain !== "undefined") {
-            provider = window.BinanceChain;
-            try {
-              await provider.request({ method: "eth_requestAccounts" });
-            } catch (error) {
-              throw new Error("User Rejected");
-            }
-          } else {
-            throw new Error("No Binance Chain Wallet found");
-          }
-          return provider;
-        },
-      },
-    };
-    return providerOptions;
-  };
 
   const resetApp = async () => {
     if (web3 && web3.currentProvider && web3.currentProvider.close) {
@@ -67,7 +29,7 @@ const ConnectWalletButton = () => {
     setChainId(1);
     setNetworkId(1);
     setConnected(false);
-    setAddress("");
+    props.setAddress("");
     setProvider(null);
     setWeb3(null);
   };
@@ -81,7 +43,7 @@ const ConnectWalletButton = () => {
       if (accounts.length <= 0) {
         resetApp();
       } else {
-        setAddress(accounts[0]);
+        props.setAddress(accounts[0]);
       }
     });
     provider.on("chainChanged", async (chainId) => {
@@ -126,7 +88,7 @@ const ConnectWalletButton = () => {
     setChainId(chainId);
     setNetworkId(networkId);
     setConnected(true);
-    setAddress(address);
+    props.setAddress(address);
   };
 
   useEffect(() => {
@@ -153,7 +115,7 @@ const ConnectWalletButton = () => {
     setChainId(chainId);
     setNetworkId(networkId);
     setConnected(true);
-    setAddress(address);
+    props.setAddress(address);
   };
 
   useEffect(() => {
@@ -166,7 +128,6 @@ const ConnectWalletButton = () => {
     <button
       className="btn btn-outline-light text-left"
       type="button"
-      disabled={false}
       onClick={connected ? resetApp : onConnect}
     >
       <div className="row walletbtn-content">
@@ -176,7 +137,7 @@ const ConnectWalletButton = () => {
           </span>
           <br />
           <span className="network-text">
-            {connected ? formatAddress(address) : DEFAULT_SEC_MSG}
+            {connected ? formatAddress(props.address) : DEFAULT_SEC_MSG}
           </span>
           <br />
           <span className="extra-msg">

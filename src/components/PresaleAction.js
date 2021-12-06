@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 import ConnectWalletButton from "./ConnectWalletButton";
 
-export default function PresaleAction() {
+export default function PresaleAction(props) {
   const isApproved = false;
 
   return (
@@ -12,7 +12,7 @@ export default function PresaleAction() {
       <div className="row alignitems-center">
         <div className="col-md-3">
           <div className="presalewallet">
-            <ConnectWalletButton />
+            <ConnectWalletButton {...props} />
           </div>
         </div>
         <div className="col-md-9 presaledeposit">
