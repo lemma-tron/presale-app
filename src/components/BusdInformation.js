@@ -11,7 +11,11 @@ import { usePresaleNen, usePresaleNenPublic } from "../hooks/useContracts";
 import { useRefund } from "../hooks/useRefund";
 import { getBalanceNumber } from "../libs/formatBalance";
 
+import { useWeb3React } from '@web3-react/core'
+
 export const BusdInformation = forwardRef((props, ref) => {
+  const { account } = useWeb3React();
+
   const [busdRaised, setBUSDRaised] = useState(0);
   const [lemaToBeDep, setLEMAToBeDep] = useState(0);
   const [tokenClaimed, setTokenClaimed] = useState(0);
@@ -23,8 +27,8 @@ export const BusdInformation = forwardRef((props, ref) => {
   const [requestedRefund, setRequestedRefund] = useState(false);
   const presaleContract = usePresaleNen();
   const presaleContractPublic = usePresaleNenPublic();
-  const { onClaim } = useClaim(presaleContract, props.account);
-  const { onRefund } = useRefund(presaleContract, props.account);
+  const { onClaim } = useClaim(presaleContract, account);
+  const { onRefund } = useRefund(presaleContract, account);
 
   const notifyError = (message) =>
     toast.error(message, {
@@ -72,15 +76,15 @@ export const BusdInformation = forwardRef((props, ref) => {
   };
 
   const fetchPersonalContractData = async () => {
-    if (presaleContract && props.account) {
+    if (presaleContract && account) {
       presaleContract.methods
-        .presaleBalances(props.account)
+        .presaleBalances(account)
         .call(function (err, res) {
           setBUSDDep(res);
         });
 
       presaleContract.methods
-        .tokenToBeTransferred(props.account)
+        .tokenToBeTransferred(account)
         .call(function (err, res) {
           setLEMAToClaim(res);
         });
@@ -164,7 +168,7 @@ export const BusdInformation = forwardRef((props, ref) => {
 
   useEffect(() => {
     fetchPersonalContractData();
-  }, [props.account]);
+  }, [account]);
 
   return (
     <div>

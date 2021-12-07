@@ -145,7 +145,7 @@ export default function PresaleAction(props) {
       <div className="row alignitems-center">
         <div className="col-md-3">
           <div className="presalewallet">
-            <ConnectWalletButton {...props} />
+            <ConnectWalletButton />
           </div>
         </div>
         <div className="col-md-9 presaledeposit">

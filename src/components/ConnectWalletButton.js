@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,11 +8,15 @@ import config from "../widgets/config";
 import formatAddress from "../libs/formatAddress";
 import { Modal } from "react-responsive-modal";
 
+import { useWeb3React } from "@web3-react/core";
+
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
 const CONNECTED_MSG = "Connected";
 
-const ConnectWalletButton = (props) => {
+const ConnectWalletButton = () => {
+  const { account } = useWeb3React();
+
   const { login, logout } = useAuth();
   const [connected, setConnected] = useState(false);
   const [connectModalIsOpen, setConnectModalIsOpen] = useState(false);
@@ -34,6 +38,12 @@ const ConnectWalletButton = (props) => {
     setAccountModalIsOpen(false);
   }
 
+  useEffect(() => {
+    if (account) {
+      setConnected(true);
+    }
+  }, [account]);
+
   return (
     <div>
       <button
@@ -48,7 +58,7 @@ const ConnectWalletButton = (props) => {
             </span>
             <br />
             <span className="network-text">
-              {connected ? formatAddress(props.account) : DEFAULT_SEC_MSG}
+              {connected ? formatAddress(account) : DEFAULT_SEC_MSG}
             </span>
             <br />
             <span className="extra-msg">

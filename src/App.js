@@ -10,7 +10,6 @@ import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const [account, setAccount] = useState("");
   const busdInformationRef = useRef();
 
   return (
@@ -19,11 +18,9 @@ function App() {
       <div className="content">
         <PresaleCountdown />
         <PresaleAction
-          account={account}
-          setAccount={setAccount}
           busdInformationRef={busdInformationRef}
         />
-        <BusdInformation account={account} ref={busdInformationRef} />
+        <BusdInformation ref={busdInformationRef} />
         <PresaleInformation />
         <ContractInformation />
       </div>
