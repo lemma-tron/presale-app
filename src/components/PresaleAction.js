@@ -204,10 +204,7 @@ export default function PresaleAction(props) {
                   className="btn btn-outline-light buy-button"
                   type="button"
                   disabled={
-                    !props.account ||
-                    requestedDeposit ||
-                    isEnded ||
-                    !validBUSD
+                    !props.account || requestedDeposit || isEnded || !validBUSD
                   }
                   onClick={handleDeposit}
                 >
@@ -217,11 +214,7 @@ export default function PresaleAction(props) {
                 <button
                   className="btn btn-outline-light buy-button"
                   type="button"
-                  disabled={
-                    !props.account ||
-                    requestedApproval ||
-                    isEnded
-                  }
+                  disabled={!props.account || requestedApproval || isEnded}
                   onClick={handleApprove}
                 >
                   <span>Approve BUSD</span>

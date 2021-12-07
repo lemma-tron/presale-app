@@ -14,7 +14,7 @@ function App() {
   const busdInformationRef = useRef();
 
   return (
-    <div className="container">
+    <div id="main" className="container">
       <Header />
       <div className="content">
         <PresaleCountdown />
