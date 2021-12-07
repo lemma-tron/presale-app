@@ -35,28 +35,6 @@ export const getProviderOptions = () => {
         return provider;
       },
     },
-    "custom-coinbase": {
-      display: {
-        logo: "../assets/coinbase_logo.png",
-        name: "Coinbase",
-        description: "Scan with WalletLink to connect",
-      },
-      options: {
-        appName: "Coinbase",
-        networkUrl: `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`,
-        chainId: process.env.REACT_APP_CHAIN_ID,
-      },
-      package: WalletLink,
-      connector: async (_, options) => {
-        const { appName, networkUrl, chainId } = options;
-        const walletLink = new WalletLink({
-          appName,
-        });
-        const provider = walletLink.makeWeb3Provider(networkUrl, chainId);
-        await provider.enable();
-        return provider;
-      },
-    },
   };
   return providerOptions;
 };
