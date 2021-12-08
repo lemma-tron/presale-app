@@ -596,7 +596,7 @@ footer .logo {
   Connect Wallet Modal
   ======================*/
 
-.connectModal {
+.connectModal, .accountModal {
   overflow: hidden;
   background: rgb(255, 255, 255);
   box-shadow: rgb(14 14 44 / 10%) 0px 20px 36px -8px, rgb(0 0 0 / 5%) 0px 1px 1px;
@@ -609,9 +609,10 @@ footer .logo {
   min-width: 290px;
   max-width: 100%;
   padding: 0px;
+  margin: 0px;
 }
 
-.connectModalOverlay {
+.connectModalOverlay, .accountModalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -620,16 +621,7 @@ footer .logo {
   background: rgba(95, 43, 185, 0.3)
 }
 
-.accountModalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(95, 43, 185, 0.3)
-}
-
-.connect-wallet-header {
+.wallet-header {
   -webkit-box-align: center;
   align-items: center;
   background: linear-gradient(139.73deg, rgb(229, 253, 255) 0%, rgb(243, 239, 255) 100%);
@@ -638,19 +630,19 @@ footer .logo {
   padding: 20px 24px;
 }
 
-.connect-wallet-header .text {
+.wallet-header .text {
   -webkit-box-align: center;
   align-items: center;
   flex: 1 1 0%;
   font-weight: bold;
 }
 
-.connect-wallet-header .close-button {
+.wallet-header .close-button {
   border: 0px;
   background-color: transparent;
 }
 
-.connect-wallet-header .close-button:hover {
+.wallet-header .close-button:hover {
   opacity: 0.6;
 }
 
@@ -699,4 +691,77 @@ footer .logo {
   line-height: 1.5;
   font-size: 14px;
   margin-top: 8px;
+}
+
+.accountWalletCardDiv {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.accountWalletCardDiv .account {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  line-height: 1.5;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.accountWalletCardDiv .account-detail {
+  display: flex;
+  margin-bottom: 25px;
+  column-gap: 20px;
+}
+
+.accountWalletCardDiv .account-detail .viewbsc, .accountWalletCardDiv .account-detail .copyAddress {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  width: fit-content;
+  color: rgb(31, 199, 212);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  column-gap: 10px;
+  cursor: pointer;
+}
+
+.accountWalletCardDiv .account-detail .viewbsc:hover, .accountWalletCardDiv .account-detail .copyAddress:hover {
+  opacity: 0.6;
+}
+
+.accountWalletCardDiv .logoutwallet {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+
+.accountWalletCardDiv .logoutwallet .logout-button {
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  -webkit-box-pack: center;
+  justify-content: center;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  opacity: 1;
+  outline: 0px;
+  transition: background-color 0.2s ease 0s;
+  height: 32px;
+  padding: 0px 16px;
+  background-color: transparent;
+  border: 2px solid rgb(31, 199, 212);
+  box-shadow: none;
+  color: rgb(31, 199, 212);
+}
+
+.accountWalletCardDiv .logoutwallet .logout-button:hover {
+  opacity: 0.7;
 }

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faExternalLinkAlt,
+  faCopy,
+} from "@fortawesome/free-solid-svg-icons";
 
 import useAuth from "../hooks/useAuth";
 import WalletCard from "../widgets/WalletCard";
@@ -10,6 +14,8 @@ import { Modal } from "react-responsive-modal";
 
 import { useWeb3React } from "@web3-react/core";
 
+import { toast } from "react-toastify";
+
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
 const CONNECTED_MSG = "Connected";
@@ -18,7 +24,6 @@ const ConnectWalletButton = () => {
   const { account } = useWeb3React();
 
   const { login, logout } = useAuth();
-  const [connected, setConnected] = useState(false);
   const [connectModalIsOpen, setConnectModalIsOpen] = useState(false);
   const [accountModalIsOpen, setAccountModalIsOpen] = useState(false);
 
@@ -38,31 +43,47 @@ const ConnectWalletButton = () => {
     setAccountModalIsOpen(false);
   }
 
-  useEffect(() => {
-    if (account) {
-      setConnected(true);
-    }
-  }, [account]);
+  const logoutWithClose = (e) => {
+    e.preventDefault();
+    setAccountModalIsOpen(false);
+
+    // logout after 1 secs
+    setTimeout(() => logout(), 500);
+  };
+
+  const notifyCopied = () =>
+    toast.success("Copied to clipboard", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+    });
+
+  const copyAddress = (e, address) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(address);
+    notifyCopied();
+  };
 
   return (
     <div>
       <button
         className="btn btn-outline-light text-left"
         type="button"
-        onClick={connected ? openAccountModal : openConnectModal}
+        onClick={account ? openAccountModal : openConnectModal}
       >
         <div className="row walletbtn-content">
           <div className="col-9">
             <span className="connect-wallet-text">
-              {connected ? CONNECTED_MSG : CONNECT_MSG}
+              {account ? CONNECTED_MSG : CONNECT_MSG}
             </span>
             <br />
             <span className="network-text">
-              {connected ? formatAddress(account) : DEFAULT_SEC_MSG}
+              {account ? formatAddress(account) : DEFAULT_SEC_MSG}
             </span>
             <br />
             <span className="extra-msg">
-              {connected ? "(Click here to logout)" : "(Get started)"}
+              {account ? "(Click here to logout)" : "(Get started)"}
             </span>
           </div>
           <div className="col-3 text-right">
@@ -81,7 +102,7 @@ const ConnectWalletButton = () => {
         }}
         center
       >
-        <div className="connect-wallet-header">
+        <div className="wallet-header">
           <span className="text">Connect Wallet</span>
           <button className="close-button" onClick={closeConnectModal}>
             <img src="/assets/cross.png" />
@@ -103,8 +124,48 @@ const ConnectWalletButton = () => {
       <Modal
         open={accountModalIsOpen}
         onClose={closeAccountModal}
+        showCloseIcon={false}
+        blockScroll={true}
+        classNames={{
+          overlay: "accountModalOverlay",
+          modal: "accountModal",
+        }}
         center
-      ></Modal>
+      >
+        <div className="wallet-header">
+          <span className="text">Your Wallet</span>
+          <button className="close-button" onClick={closeAccountModal}>
+            <img src="/assets/cross.png" />
+          </button>
+        </div>
+
+        <div className="accountWalletCardDiv">
+          <span className="account">{account}</span>
+          <div className="account-detail">
+            <a
+              target="_blank"
+              rel="noreferrer noopener"
+              href={`https://bscscan.com/address/${account}`}
+              className="viewbsc"
+            >
+              <span>View on BSC</span>
+              <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </a>
+            <div
+              className="copyAddress"
+              onClick={(e) => copyAddress(e, account)}
+            >
+              <span>Copy Address</span>
+              <FontAwesomeIcon icon={faCopy} />
+            </div>
+          </div>
+          <div className="logoutwallet">
+            <button className="logout-button" onClick={logoutWithClose}>
+              Logout
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
