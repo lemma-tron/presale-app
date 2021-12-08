@@ -1,178 +1,172 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
+import {
+  faArrowRight,
+  faExternalLinkAlt,
+  faCopy,
+} from "@fortawesome/free-solid-svg-icons";
 
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import useAuth from "../hooks/useAuth";
+import WalletCard from "../widgets/WalletCard";
+import config from "../widgets/config";
 import formatAddress from "../libs/formatAddress";
-import { getProviderOptions } from "../libs/providers";
+import { Modal } from "react-responsive-modal";
 
-const validChainId = process.env.REACT_APP_CHAIN_ID;
+import { useWeb3React } from "@web3-react/core";
+
+import { toast } from "react-toastify";
 
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
 const CONNECTED_MSG = "Connected";
 
-const CHAIN_ERROR = "Please make sure you are in Binance Smart Chain.";
+const ConnectWalletButton = () => {
+  const { account } = useWeb3React();
 
-const ConnectWalletButton = (props) => {
-  const [web3Modal, setWeb3Modal] = useState(null);
-  const [provider, setProvider] = useState(null);
-  const [web3, setWeb3] = useState(null);
-  const [chainId, setChainId] = useState(1);
-  const [networkId, setNetworkId] = useState(1);
-  const [connected, setConnected] = useState(false);
+  const { login, logout } = useAuth();
+  const [connectModalIsOpen, setConnectModalIsOpen] = useState(false);
+  const [accountModalIsOpen, setAccountModalIsOpen] = useState(false);
 
-  const notifyError = (message) =>
-    toast.error(message, {
-      position: "top-left",
-      autoClose: 5000,
+  function openConnectModal() {
+    setConnectModalIsOpen(true);
+  }
+
+  function closeConnectModal() {
+    setConnectModalIsOpen(false);
+  }
+
+  function openAccountModal() {
+    setAccountModalIsOpen(true);
+  }
+
+  function closeAccountModal() {
+    setAccountModalIsOpen(false);
+  }
+
+  const logoutWithClose = (e) => {
+    e.preventDefault();
+    setAccountModalIsOpen(false);
+
+    // logout after 1 secs
+    setTimeout(() => logout(), 500);
+  };
+
+  const notifyCopied = () =>
+    toast.success("Copied to clipboard", {
+      position: "top-right",
+      autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
     });
 
-  const resetApp = async () => {
-    if (web3 && web3.currentProvider && web3.currentProvider.close) {
-      await web3.currentProvider.close();
-    }
-
-    await web3Modal.clearCachedProvider();
-
-    setChainId(1);
-    setNetworkId(1);
-    setConnected(false);
-    props.setAccount("");
-    setProvider(null);
-    setWeb3(null);
+  const copyAddress = (e, address) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(address);
+    notifyCopied();
   };
-
-  const subscribeProvider = async (web3, provider) => {
-    if (!provider.on) {
-      return;
-    }
-    provider.on("close", () => resetApp());
-    provider.on("accountsChanged", async (accounts) => {
-      if (accounts.length <= 0) {
-        resetApp();
-      } else {
-        props.setAccount(accounts[0]);
-      }
-    });
-
-    provider.on("chainChanged", async (chainId) => {
-      setChainId(chainId);
-      if (chainId != validChainId) {
-        notifyError(CHAIN_ERROR);
-        resetApp();
-      }
-    });
-
-    provider.on("networkChanged", async (networkId) => {
-      const chainId = await web3.eth.chainId();
-      setChainId(chainId);
-      setNetworkId(networkId);
-    });
-  };
-
-  const initWeb3 = (provider) => {
-    const web3 = new Web3(provider);
-    web3.eth.extend({
-      methods: [
-        {
-          name: "chainId",
-          call: "eth_chainId",
-          outputFormatter: web3.utils.hexToNumber,
-        },
-      ],
-    });
-    return web3;
-  };
-
-  const onConnect = async () => {
-    await web3Modal.clearCachedProvider();
-    const provider = await web3Modal.connect();
-    const web3 = initWeb3(provider);
-    await subscribeProvider(web3, provider);
-    const accounts = await web3.eth.getAccounts();
-    const account = accounts[0];
-    const networkId = await web3.eth.net.getId();
-    const chainId = await web3.eth.chainId();
-
-    console.log(validChainId)
-    console.log(chainId)
-
-    if (chainId != validChainId) {
-      notifyError(CHAIN_ERROR);
-      resetApp();
-    }
-
-    setWeb3(web3);
-    setProvider(provider);
-    setChainId(chainId);
-    setNetworkId(networkId);
-    setConnected(true);
-    props.setAccount(account);
-  };
-
-  useEffect(() => {
-    const web3Modal = new Web3Modal({
-      cacheProvider: true,
-      providerOptions: getProviderOptions(),
-      disableInjectedProvider: false,
-    });
-
-    setWeb3Modal(web3Modal);
-  }, []);
-
-  const connectToProvider = async (web3Modal) => {
-    const provider = await web3Modal.connect();
-    const web3 = initWeb3(provider);
-    await subscribeProvider(web3, provider);
-    const accounts = await web3.eth.getAccounts();
-    const account = accounts[0];
-    const networkId = await web3.eth.net.getId();
-    const chainId = await web3.eth.chainId();
-
-    setWeb3(web3);
-    setProvider(provider);
-    setChainId(chainId);
-    setNetworkId(networkId);
-    setConnected(true);
-    props.setAccount(account);
-  };
-
-  useEffect(() => {
-    if (web3Modal && web3Modal.cachedProvider) {
-      connectToProvider(web3Modal);
-    }
-  }, [web3Modal]);
 
   return (
-    <button
-      className="btn btn-outline-light text-left"
-      type="button"
-      onClick={connected ? resetApp : onConnect}
-    >
-      <div className="row walletbtn-content">
-        <div className="col-9">
-          <span className="connect-wallet-text">
-            {connected ? CONNECTED_MSG : CONNECT_MSG}
-          </span>
-          <br />
-          <span className="network-text">
-            {connected ? formatAddress(props.account) : DEFAULT_SEC_MSG}
-          </span>
-          <br />
-          <span className="extra-msg">
-            {connected ? "(Click here to logout)" : "(Get started)"}
-          </span>
+    <div>
+      <button
+        className="btn btn-outline-light text-left"
+        type="button"
+        onClick={account ? openAccountModal : openConnectModal}
+      >
+        <div className="row walletbtn-content">
+          <div className="col-9">
+            <span className="connect-wallet-text">
+              {account ? CONNECTED_MSG : CONNECT_MSG}
+            </span>
+            <br />
+            <span className="network-text">
+              {account ? formatAddress(account) : DEFAULT_SEC_MSG}
+            </span>
+            <br />
+            <span className="extra-msg">
+              {account ? "(Click here to logout)" : "(Get started)"}
+            </span>
+          </div>
+          <div className="col-3 text-right">
+            <FontAwesomeIcon icon={faArrowRight} />
+          </div>
         </div>
-        <div className="col-3 text-right">
-          <FontAwesomeIcon icon={faArrowRight} />
+      </button>
+      <Modal
+        open={connectModalIsOpen}
+        onClose={closeConnectModal}
+        showCloseIcon={false}
+        blockScroll={true}
+        classNames={{
+          overlay: "connectModalOverlay",
+          modal: "connectModal",
+        }}
+        center
+      >
+        <div className="wallet-header">
+          <span className="text">Connect Wallet</span>
+          <button className="close-button" onClick={closeConnectModal}>
+            <img src="/assets/cross.png" />
+          </button>
         </div>
-      </div>
-    </button>
+
+        <div className="walletCardDiv">
+          {config.map((entry, index) => (
+            <WalletCard
+              key={entry.title}
+              login={login}
+              walletConfig={entry}
+              onDismiss={closeConnectModal}
+            />
+          ))}
+        </div>
+      </Modal>
+
+      <Modal
+        open={accountModalIsOpen}
+        onClose={closeAccountModal}
+        showCloseIcon={false}
+        blockScroll={true}
+        classNames={{
+          overlay: "accountModalOverlay",
+          modal: "accountModal",
+        }}
+        center
+      >
+        <div className="wallet-header">
+          <span className="text">Your Wallet</span>
+          <button className="close-button" onClick={closeAccountModal}>
+            <img src="/assets/cross.png" />
+          </button>
+        </div>
+
+        <div className="accountWalletCardDiv">
+          <span className="account">{account}</span>
+          <div className="account-detail">
+            <a
+              target="_blank"
+              rel="noreferrer noopener"
+              href={`https://bscscan.com/address/${account}`}
+              className="viewbsc"
+            >
+              <span>View on BSC</span>
+              <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </a>
+            <div
+              className="copyAddress"
+              onClick={(e) => copyAddress(e, account)}
+            >
+              <span>Copy Address</span>
+              <FontAwesomeIcon icon={faCopy} />
+            </div>
+          </div>
+          <div className="logoutwallet">
+            <button className="logout-button" onClick={logoutWithClose}>
+              Logout
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </div>
   );
 };
 

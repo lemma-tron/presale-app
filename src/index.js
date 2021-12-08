@@ -1,13 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "react-toastify/dist/ReactToastify.css";
+import "react-responsive-modal/styles.css";
 import "./index.css";
-import 'react-toastify/dist/ReactToastify.css';
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { Web3ReactProvider } from "@web3-react/core";
+import { getLibrary } from "./libs/web3React";
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <App />
+    </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

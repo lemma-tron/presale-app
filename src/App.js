@@ -8,22 +8,20 @@ import PresaleInformation from "./components/PresaleInformation";
 import Footer from "./components/Footer";
 
 import { ToastContainer } from "react-toastify";
+import useEagerConnect from "./hooks/useEagerConnect";
 
 function App() {
-  const [account, setAccount] = useState("");
   const busdInformationRef = useRef();
 
+  useEagerConnect();
+
   return (
-    <div className="container">
+    <div id="main" className="container">
       <Header />
       <div className="content">
         <PresaleCountdown />
-        <PresaleAction
-          account={account}
-          setAccount={setAccount}
-          busdInformationRef={busdInformationRef}
-        />
-        <BusdInformation account={account} ref={busdInformationRef} />
+        <PresaleAction busdInformationRef={busdInformationRef} />
+        <BusdInformation ref={busdInformationRef} />
         <PresaleInformation />
         <ContractInformation />
       </div>
