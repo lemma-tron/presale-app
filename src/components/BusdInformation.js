@@ -11,7 +11,7 @@ import { usePresaleNen, usePresaleNenPublic } from "../hooks/useContracts";
 import { useRefund } from "../hooks/useRefund";
 import { getBalanceNumber } from "../libs/formatBalance";
 
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from "@web3-react/core";
 
 export const BusdInformation = forwardRef((props, ref) => {
   const { account } = useWeb3React();
@@ -167,7 +167,12 @@ export const BusdInformation = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
-    fetchPersonalContractData();
+    if (account) {
+      fetchPersonalContractData();
+    } else {
+      setBUSDDep(0);
+      setLEMAToClaim(0);
+    }
   }, [account]);
 
   return (
