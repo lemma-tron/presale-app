@@ -83,7 +83,7 @@ const ConnectWalletButton = () => {
             </span>
             <br />
             <span className="extra-msg">
-              {account ? "(Click here to logout)" : "(Get started)"}
+              {account ? "(Click here to disconnect)" : "(Get started)"}
             </span>
           </div>
           <div className="col-3 text-right">
