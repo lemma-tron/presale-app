@@ -4,10 +4,11 @@
 
 body {
   margin: 0;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Chivo', 'Montserrat', 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to right, #512DA8, #711e72);
+  /* background: linear-gradient(to right, #512DA8, #711e72); */
+  background: linear-gradient(to right, #0b2d6c, #14b6ff);
 }
 
 a,
@@ -32,7 +33,7 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
+  font-family:   'Chivo', 'Montserrat', 'Poppins', sans-serif;
 }
 
 .h1,
@@ -130,7 +131,7 @@ input[type=number] {
   font-weight: 700;
   letter-spacing: 2px;
   height: auto;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Chivo', 'Montserrat', 'Poppins', sans-serif;
 }
 
 .navbar-custom .navbar-nav a {
