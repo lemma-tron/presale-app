@@ -5,7 +5,6 @@ import {
   faTwitter,
   faTelegram,
   faMediumM,
-  faFacebook,
   faDiscord,
   faLinkedin
 } from "@fortawesome/free-brands-svg-icons";
