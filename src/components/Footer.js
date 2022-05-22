@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
   faTelegram,
-  faMediumM
+  faMediumM,
+  faDiscord,
+  faLinkedin
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
@@ -36,11 +38,29 @@ export default function Footer() {
                   </li>
                   <li style={{ marginLeft: "10px" }}>
                     <a
-                      href="https://t.me/lemmatron"
+                      href="https://t.me/lemmatron_tg"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon icon={faTelegram} />
+                    </a>
+                  </li>
+                  <li style={{ marginLeft: "10px" }}>
+                    <a
+                      href="https://discord.gg/XnuWPY4kQT"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faDiscord} />
+                    </a>
+                  </li>
+                  <li style={{ marginLeft: "10px" }}>
+                    <a
+                      href="https://www.linkedin.com/company/lemmatron"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} />
                     </a>
                   </li>
                   <li style={{ marginLeft: "10px" }}>

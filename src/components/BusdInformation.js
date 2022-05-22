@@ -7,10 +7,9 @@ import React, {
 } from "react";
 import { toast } from "react-toastify";
 import { useClaim } from "../hooks/useClaim";
-import { usePresaleNen, usePresaleNenPublic } from "../hooks/useContracts";
+import { usePresaleLema, usePresaleLemaPublic } from "../hooks/useContracts";
 import { useRefund } from "../hooks/useRefund";
-import { getBalanceNumber } from "../libs/formatBalance";
-
+import { formatNumber, getBalanceNumber } from "../libs/formatBalance";
 import { useWeb3React } from "@web3-react/core";
 
 export const BusdInformation = forwardRef((props, ref) => {
@@ -25,8 +24,8 @@ export const BusdInformation = forwardRef((props, ref) => {
   const [isRefunding, setIsRefunding] = useState(false);
   const [requestedClaim, setRequestedClaim] = useState(false);
   const [requestedRefund, setRequestedRefund] = useState(false);
-  const presaleContract = usePresaleNen();
-  const presaleContractPublic = usePresaleNenPublic();
+  const presaleContract = usePresaleLema();
+  const presaleContractPublic = usePresaleLemaPublic();
   const { onClaim } = useClaim(presaleContract, account);
   const { onRefund } = useRefund(presaleContract, account);
 
@@ -185,22 +184,21 @@ export const BusdInformation = forwardRef((props, ref) => {
             <div className="custom-font token-count">
               {getBalanceNumber(busdRaised)}
             </div>
-            <div>(Min Goal: 20k)</div>
           </div>
           <hr />
           <div className="lemacount">
             <div>Total LEMA to be distributed</div>
             <div className="custom-font token-count">
-              {getBalanceNumber(lemaToBeDep)}
+              {lemaToBeDep > 0 ? `~${formatNumber(getBalanceNumber(lemaToBeDep), 3)}`: 0}
             </div>
-            <div>LEMA claimed: {getBalanceNumber(tokenClaimed)}</div>
+            <div>LEMA claimed: {tokenClaimed > 0 ? `~${formatNumber(getBalanceNumber(tokenClaimed), 3)}`:0}</div>
           </div>
         </div>
 
         <div className="busdinformation-content-2">
           <div className="row busdcount alignitems-center">
             <div className="col-7">
-              Your BUSD deposit: <br /> (Max 10,000)
+              Your BUSD deposit: <br />
             </div>
             <div className="col-5 custom-font token-count-personal">
               {getBalanceNumber(busdDep)}
@@ -209,7 +207,7 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="row lemacount alignitems-center">
             <div className="col-7">LEMA to claim: </div>
             <div className="col-5 custom-font token-count-personal">
-              {getBalanceNumber(lemaToClaim)}
+              {lemaToClaim > 0 ? `~${formatNumber(getBalanceNumber(lemaToClaim), 3)}` : 0}
             </div>
           </div>
           <div>

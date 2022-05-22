@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { usePresaleNenPublic } from "../hooks/useContracts";
+import { usePresaleLemaPublic } from "../hooks/useContracts";
 import { convertMillistoDHMS } from "../libs/formatDateTime";
 
-const COUNTDOWN_MSG = "Presale Count down";
-const LIVE_MSG = "Presale is live";
-const END_MSG = "Presale has ended";
+const COUNTDOWN_MSG = "Private Sale Count Down";
+const LIVE_MSG = "Private sale is live";
+const END_MSG = "Private sale has ended";
 
 export default function PresaleCountdown() {
   const Ref = useRef(null);
@@ -15,7 +15,7 @@ export default function PresaleCountdown() {
   const [mins, setMins] = useState(0);
   const [secs, setSecs] = useState(0);
 
-  const presaleContractPublic = usePresaleNenPublic();
+  const presaleContractPublic = usePresaleLemaPublic();
 
   const fetchContractData = async (timerStopped) => {
     if (presaleContractPublic) {

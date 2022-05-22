@@ -5,24 +5,22 @@ export default function PresaleInformation() {
     <div>
       <div className="p-5" />
       <div className="presaleinformation">
-        <h1 className="title custom-font">Presale Information</h1>
+        <h1 className="title custom-font">Private Sale Information</h1>
         <ul>
-          <li>Presale starts from Nov 25, 2021 (12:00 AM UTC).</li>
+          <li>Start Time = May 20, 2022 (12:00 AM UTC).</li>
           <li>
-            Presale ends on Jan 11th, 2021 (12:00 AM UTC). [Subject to change]
+            End Time = May 31, 2022 (12:00 AM UTC). <i>[Subject to change]</i>
+          </li>
+          <li>Soft Cap = $0</li>
+          <li>
+            Hard Cap = $450,000 or 600,000,000 LEMA. <br />
+            If this goal is not met within the private sale deadline, the
+            remaining tokens will be burnt.
           </li>
           <li>Commitment should be done in BUSD.</li>
-          <li>There is no minimum amount to commit.</li>
-          <li>
-            Minimum amount of BUSD to be raised is 20k BUSD. If this goal is not
-            met within Presale deadline, all deposits will be refunded.
-          </li>
-          <li>Maximum amount for an individual is capped at 10k BUSD.</li>
-          <li>
-            The price at which your commitment will execute depends on the total
-            amount raised.
-          </li>
-          <ul>
+          <li>There is no minimum or maximum amount to commit.</li>
+
+          {/* <ul>
             <li>
               If total amount is {`<=`} 25,000 BUSD then price will be $0.025
               per LEMA.
@@ -36,10 +34,16 @@ export default function PresaleInformation() {
               If total amount is {`>`} 50,000 BUSD then price will be $0.05 per
               LEMA.
             </li>
-          </ul>
+          </ul> */}
           <li>
-            LEMA token will be claimable after vesting. Date has not been
-            finalized. Stay tuned to our dicord channel and twitter for updates.
+            Private sale LEMA tokens will be claimable after vesting. See
+            schedule in our tokenomics. Stay tuned to our social media for
+            updates. Links in the footer.
+          </li>
+          <li>
+            The price at which your commitment will execute depends on the days
+            since the start of the presale which is illustrated by the figure
+            below:
           </li>
         </ul>
 
