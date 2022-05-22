@@ -10,9 +10,8 @@ export const getBalanceNumber = (balance, decimals = 18) => {
     const displayBalance = new BigNumber(balance).dividedBy(
       new BigNumber(10).pow(decimals)
     );
-  
     var num = displayBalance.toNumber();
-    return formatNumber(num, 3);
+    return num;
   }
 
   return 0;
