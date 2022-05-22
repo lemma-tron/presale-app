@@ -2,10 +2,10 @@ import { useCallback } from "react";
 import { refundBUSD } from "../libs/callHelpers";
 
 // Refund BUSD from PresaleVault
-export const useRefund = (persaleNenContract, account) => {
+export const useRefund = (persaleLemaContract, account) => {
   const handleRefund = useCallback(async () => {
-    await refundBUSD(persaleNenContract, account);
-  }, [account, persaleNenContract]);
+    await refundBUSD(persaleLemaContract, account);
+  }, [account, persaleLemaContract]);
 
   return { onRefund: handleRefund };
 };

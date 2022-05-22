@@ -1,13 +1,13 @@
 import { useCallback } from "react";
-import { claimNENToken } from "../libs/callHelpers";
+import { claimLemaToken } from "../libs/callHelpers";
 
 // Deposit BUSD in PresaleVault
-export const useClaim = (persaleNenContract, account) => {
+export const useClaim = (persaleLemaContract, account) => {
   const handleClaim = useCallback(
     async () => {
-      await claimNENToken(persaleNenContract, account);
+      await claimLemaToken(persaleLemaContract, account);
     },
-    [account, persaleNenContract]
+    [account, persaleLemaContract]
   );
 
   return { onClaim: handleClaim };

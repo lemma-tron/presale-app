@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { toast } from "react-toastify";
 import { useClaim } from "../hooks/useClaim";
-import { usePresaleNen, usePresaleNenPublic } from "../hooks/useContracts";
+import { usePresaleLema, usePresaleLemaPublic } from "../hooks/useContracts";
 import { useRefund } from "../hooks/useRefund";
 import { getBalanceNumber } from "../libs/formatBalance";
 
@@ -25,8 +25,8 @@ export const BusdInformation = forwardRef((props, ref) => {
   const [isRefunding, setIsRefunding] = useState(false);
   const [requestedClaim, setRequestedClaim] = useState(false);
   const [requestedRefund, setRequestedRefund] = useState(false);
-  const presaleContract = usePresaleNen();
-  const presaleContractPublic = usePresaleNenPublic();
+  const presaleContract = usePresaleLema();
+  const presaleContractPublic = usePresaleLemaPublic();
   const { onClaim } = useClaim(presaleContract, account);
   const { onRefund } = useRefund(presaleContract, account);
 

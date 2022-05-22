@@ -1,15 +1,15 @@
 import {
-  getPresaleNenAddress,
-  getPresaleNenVaultAddress,
+  getPresaleLemaAddress,
+  getPresaleLemaVaultAddress,
   getBUSDAddress,
-  getNenTokenAddress,
+  getLemaTokenAddress,
 } from "../libs/addressHelpers";
 import { useWeb3, useWeb3Public } from "../libs/useWeb3";
 
 import busdToken from "../config/abis/BEP20.json";
-import nenToken from "../config/abis/NenToken.json";
-import presaleNen from "../config/abis/PresaleNen.json";
-import presaleNenVault from "../config/abis/PresaleNenRefundVault.json";
+import lemaToken from "../config/abis/LemaToken.json";
+import presaleLema from "../config/abis/PresaleLemaV2.json";
+import presaleLemaVault from "../config/abis/PresaleLemaRefundVault.json";
 
 const useContract = (abiArtifact, address) => {
   const web3 = useWeb3();
@@ -25,24 +25,24 @@ const useContractPublic = (abiArtifact, address) => {
  * Helper hooks to get specific contracts (by ABI)
  */
 
-export const usePresaleNen = () => {
-  return useContract(presaleNen, getPresaleNenAddress());
+export const usePresaleLema = () => {
+  return useContract(presaleLema, getPresaleLemaAddress());
 };
 
-export const usePresaleNenPublic = () => {
-  return useContractPublic(presaleNen, getPresaleNenAddress());
+export const usePresaleLemaPublic = () => {
+  return useContractPublic(presaleLema, getPresaleLemaAddress());
 };
 
-export const usePresaleNenVault = () => {
-  return useContract(presaleNenVault, getPresaleNenVaultAddress());
+export const usePresaleLemaVault = () => {
+  return useContract(presaleLemaVault, getPresaleLemaVaultAddress());
 };
 
 export const useBUSDToken = () => {
   return useContract(busdToken, getBUSDAddress());
 };
 
-export const useNENToken = () => {
-  return useContract(nenToken, getNenTokenAddress());
+export const useLemaToken = () => {
+  return useContract(lemaToken, getLemaTokenAddress());
 };
 
 export default useContract;

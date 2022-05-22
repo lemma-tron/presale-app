@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  getPresaleNenAddress,
-  getPresaleNenVaultAddress,
+  getPresaleLemaAddress,
+  getPresaleLemaVaultAddress,
   getBUSDAddress,
-  getNenTokenAddress,
+  getLemaTokenAddress,
 } from "../libs/addressHelpers";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,16 +34,16 @@ export default function ContractInformation() {
           <div className="title">Presale Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + getPresaleNenAddress()}
+              href={bscScanUrl + getPresaleLemaAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              {getPresaleNenAddress()}
+              {getPresaleLemaAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, getPresaleNenAddress())}
+              onClick={(e) => copyAddress(e, getPresaleLemaAddress())}
             />
           </div>
         </div>
@@ -51,16 +51,16 @@ export default function ContractInformation() {
           <div className="title">Presale Vault Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + getPresaleNenVaultAddress()}
+              href={bscScanUrl + getPresaleLemaVaultAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              {getPresaleNenVaultAddress()}
+              {getPresaleLemaVaultAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, getPresaleNenVaultAddress())}
+              onClick={(e) => copyAddress(e, getPresaleLemaVaultAddress())}
             />
           </div>
         </div>
@@ -68,16 +68,16 @@ export default function ContractInformation() {
           <div className="title">LEMA Contract Address</div>
           <div className="address">
             <a
-              href={bscScanUrl + getNenTokenAddress()}
+              href={bscScanUrl + getLemaTokenAddress()}
               rel="noopener noreferrer"
               target="_blank"
             >
-              {getNenTokenAddress()}
+              {getLemaTokenAddress()}
             </a>
             <FontAwesomeIcon
               icon={faCopy}
               className="copy_address"
-              onClick={(e) => copyAddress(e, getNenTokenAddress())}
+              onClick={(e) => copyAddress(e, getLemaTokenAddress())}
             />
           </div>
         </div>

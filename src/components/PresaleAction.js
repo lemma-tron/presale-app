@@ -7,8 +7,8 @@ import ConnectWalletButton from "./ConnectWalletButton";
 import { useApprove } from "../hooks/useApprove";
 import {
   useBUSDToken,
-  usePresaleNen,
-  usePresaleNenVault,
+  usePresaleLema,
+  usePresaleLemaVault,
 } from "../hooks/useContracts";
 import { useDeposit } from "../hooks/useDeposit";
 import { isNumeric } from "../libs/validateBUSD";
@@ -25,8 +25,8 @@ export default function PresaleAction(props) {
   const [busdValue, setBUSDValue] = useState(0);
   const [busdRate, setBUSDRate] = useState(40);
   const busdContract = useBUSDToken();
-  const presaleContract = usePresaleNen();
-  const presaleNenVaultContract = usePresaleNenVault();
+  const presaleContract = usePresaleLema();
+  const presaleLemaVaultContract = usePresaleLemaVault();
   const { onApprove } = useApprove(busdContract, props.account);
   const { onDeposit } = useDeposit(presaleContract, props.account);
 
@@ -41,7 +41,7 @@ export default function PresaleAction(props) {
   const fetchAllowance = async () => {
     if (busdContract && props.account) {
       const res = await busdContract.methods
-        .allowance(props.account, presaleNenVaultContract.options.address)
+        .allowance(props.account, presaleLemaVaultContract.options.address)
         .call();
       const allowance = new BigNumber(res);
       setIsApproved(props.account && allowance && allowance.isGreaterThan(0));

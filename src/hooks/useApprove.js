@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { approve } from '../libs/callHelpers';
-import { usePresaleNenVault } from "./useContracts";
+import { usePresaleLemaVault } from "./useContracts";
 
 // Approve BUSD
 export const useApprove = (busdContract, account) => {
-  const presaleNenVaultContract = usePresaleNenVault();
+  const presaleLemaVaultContract = usePresaleLemaVault();
   const handleApprove = useCallback(async () => {
-    await approve(busdContract, presaleNenVaultContract, account);
-  }, [account, busdContract, presaleNenVaultContract]);
+    await approve(busdContract, presaleLemaVaultContract, account);
+  }, [account, busdContract, presaleLemaVaultContract]);
 
   return { onApprove: handleApprove };
 };

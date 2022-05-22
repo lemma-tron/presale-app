@@ -2,12 +2,12 @@ import { useCallback } from "react";
 import { buyTokensWithBUSD } from "../libs/callHelpers";
 
 // Deposit BUSD in PresaleVault
-export const useDeposit = (persaleNenContract, account) => {
+export const useDeposit = (persaleLemaContract, account) => {
   const handleDeposit = useCallback(
     async (amount) => {
-      await buyTokensWithBUSD(persaleNenContract, amount, account);
+      await buyTokensWithBUSD(persaleLemaContract, amount, account);
     },
-    [account, persaleNenContract]
+    [account, persaleLemaContract]
   );
 
   return { onDeposit: handleDeposit };
