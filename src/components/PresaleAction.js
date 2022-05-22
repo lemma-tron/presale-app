@@ -21,9 +21,9 @@ export default function PresaleAction(props) {
   const [validBUSD, setValidBUSD] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
-  const [lemaValue, setLEMAValue] = useState(0);
-  const [busdValue, setBUSDValue] = useState(0);
-  const [lemaPrice, setLemaPrice] = useState(40);
+  const [lemaValue, setLEMAValue] = useState('');
+  const [busdValue, setBUSDValue] = useState('');
+  const [lemaPrice, setLemaPrice] = useState(2000);
   const busdContract = useBUSDToken();
   const presaleContract = usePresaleLema();
   const presaleLemaVaultContract = usePresaleLemaVault();
@@ -103,6 +103,9 @@ export default function PresaleAction(props) {
       await onDeposit(busdValue);
       setRequestedDeposit(false);
 
+      setBUSDValue('');
+      setLEMAValue('');
+
       if (props.busdInformationRef) {
         props.busdInformationRef.current.fetchContractDataFromOutside();
       }
@@ -137,7 +140,7 @@ export default function PresaleAction(props) {
       setValidBUSD(true);
     } else {
       setValidBUSD(false);
-      setLEMAValue(0);
+      setLEMAValue('');
     }
   };
 
@@ -171,6 +174,7 @@ export default function PresaleAction(props) {
                       name="busd"
                       min="0"
                       max="10000"
+                      value={busdValue}
                       onSelect={handleInputSelect}
                       onChange={handleValueChange}
                     />

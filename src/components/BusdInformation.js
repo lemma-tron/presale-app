@@ -189,9 +189,9 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="lemacount">
             <div>Total LEMA to be distributed</div>
             <div className="custom-font token-count">
-              ~{formatNumber(getBalanceNumber(lemaToBeDep), 3)}
+              {lemaToBeDep > 0 ? `~${formatNumber(getBalanceNumber(lemaToBeDep), 3)}`: 0}
             </div>
-            <div>LEMA claimed: {formatNumber(getBalanceNumber(tokenClaimed), 3)}</div>
+            <div>LEMA claimed: {tokenClaimed > 0 ? `~${formatNumber(getBalanceNumber(tokenClaimed), 3)}`:0}</div>
           </div>
         </div>
 
@@ -207,7 +207,7 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="row lemacount alignitems-center">
             <div className="col-7">LEMA to claim: </div>
             <div className="col-5 custom-font token-count-personal">
-              ~{formatNumber(getBalanceNumber(lemaToClaim), 3)}
+              {lemaToClaim > 0 ? `~${formatNumber(getBalanceNumber(lemaToClaim), 3)}` : 0}
             </div>
           </div>
           <div>
