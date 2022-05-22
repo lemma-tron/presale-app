@@ -126,8 +126,6 @@ export default function PresaleAction(props) {
   const handleInputSelect = async (e) => {
     e.preventDefault();
     getCurrentLemaPrice();
-
-    console.log('hrere')
   };
 
   const handleValueChange = async (e) => {
