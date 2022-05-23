@@ -6,7 +6,7 @@ export const formatNumber = (num, decimalPlace) => {
 };
 
 export const getBalanceNumber = (balance, decimals = 18) => {
-  if(balance) {
+  if (balance) {
     const displayBalance = new BigNumber(balance).dividedBy(
       new BigNumber(10).pow(decimals)
     );
