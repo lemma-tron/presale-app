@@ -23,7 +23,7 @@ export default function PresaleAction(props) {
   const [isEnded, setIsEnded] = useState(false);
   const [lemaValue, setLEMAValue] = useState('');
   const [busdValue, setBUSDValue] = useState('');
-  const [lemaPrice, setLemaPrice] = useState(2000);
+  const [lemaPrice, setLemaPrice] = useState(0.0005);
   const busdContract = useBUSDToken();
   const presaleContract = usePresaleLema();
   const presaleLemaVaultContract = usePresaleLemaVault();
