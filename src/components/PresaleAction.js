@@ -155,7 +155,7 @@ export default function PresaleAction(props) {
         </div>
         <div className="col-md-9 presaledeposit">
           <div className="current-lema-rate">
-            Current Price 1 BUSD ≈ {formatNumber(1/lemaPrice, 3)} LEMA
+            Current Price 1 BUSD ≈ {lemaPrice ? formatNumber(1/lemaPrice, 3) : formatNumber(1/0.0005, 3)} LEMA
           </div>
           <div className="row alignitems-center presaleaction-card">
             <div className="col-md-9 presale-transaction">
