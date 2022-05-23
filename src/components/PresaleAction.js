@@ -10,6 +10,7 @@ import {
   useBUSDToken,
   usePresaleLema,
   usePresaleLemaVault,
+  usePresaleLemaWS,
 } from "../hooks/useContracts";
 import { useDeposit } from "../hooks/useDeposit";
 import { isNumeric } from "../libs/validateBUSD";
@@ -26,6 +27,7 @@ export default function PresaleAction(props) {
   const [lemaPrice, setLemaPrice] = useState(0.0005);
   const busdContract = useBUSDToken();
   const presaleContract = usePresaleLema();
+  const presaleContractWS = usePresaleLemaWS();
   const presaleLemaVaultContract = usePresaleLemaVault();
 
   const { account } = useWeb3React();
@@ -48,7 +50,7 @@ export default function PresaleAction(props) {
       const allowance = new BigNumber(res);
       setIsApproved(account && allowance && allowance.isGreaterThan(0));
     }
-  }, [busdContract, account, presaleLemaVaultContract.options.address]);
+  }, [busdContract, account, presaleLemaVaultContract]);
 
   const getCurrentLemaPrice = useCallback(async () => {
     if (presaleContract) {
@@ -71,8 +73,8 @@ export default function PresaleAction(props) {
   }, [presaleContract, props.busdInformationRef]);
 
   const subscribeToFinalized = useCallback(async () => {
-    if (presaleContract) {
-      presaleContract.events
+    if (presaleContractWS) {
+      presaleContractWS.events
         .Finalized({
           fromBlock: "latest",
         })
@@ -81,7 +83,7 @@ export default function PresaleAction(props) {
         })
         .on("error", console.error);
     }
-  }, [presaleContract, checkPresaleIsEnded]);
+  }, [presaleContractWS, checkPresaleIsEnded]);
 
   const handleApprove = useCallback(async () => {
     try {
@@ -120,11 +122,11 @@ export default function PresaleAction(props) {
     checkPresaleIsEnded();
     getCurrentLemaPrice();
     subscribeToFinalized();
-  }, []);
+  }, [presaleContract, presaleContractWS]);
 
   useEffect(() => {
     fetchAllowance();
-  }, []);
+  }, [account, busdContract, presaleLemaVaultContract]);
 
   const handleInputSelect = async (e) => {
     e.preventDefault();

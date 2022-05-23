@@ -7,7 +7,11 @@ import React, {
 } from "react";
 import { toast } from "react-toastify";
 import { useClaim } from "../hooks/useClaim";
-import { usePresaleLema, usePresaleLemaPublic } from "../hooks/useContracts";
+import {
+  usePresaleLema,
+  usePresaleLemaPublic,
+  usePresaleLemaWS,
+} from "../hooks/useContracts";
 import { useRefund } from "../hooks/useRefund";
 import { formatNumber, getBalanceNumber } from "../libs/formatBalance";
 import { useWeb3React } from "@web3-react/core";
@@ -26,6 +30,7 @@ export const BusdInformation = forwardRef((props, ref) => {
   const [requestedRefund, setRequestedRefund] = useState(false);
   const presaleContract = usePresaleLema();
   const presaleContractPublic = usePresaleLemaPublic();
+  const presaleContractWS = usePresaleLemaWS();
   const { onClaim } = useClaim(presaleContract, account);
   const { onRefund } = useRefund(presaleContract, account);
 
@@ -119,8 +124,8 @@ export const BusdInformation = forwardRef((props, ref) => {
   }, [onClaim, fetchPersonalContractData]);
 
   const subscribeToBUSDDeposited = useCallback(async () => {
-    if (presaleContractPublic) {
-      presaleContractPublic.events
+    if (presaleContractWS) {
+      presaleContractWS.events
         .BUSDDeposited({
           fromBlock: "latest",
         })
@@ -129,11 +134,11 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  }, [presaleContractPublic, fetchTotalDataOnly]);
+  }, [presaleContractWS, fetchTotalDataOnly]);
 
   const subscribeToTokenClaimed = useCallback(async () => {
-    if (presaleContractPublic) {
-      presaleContractPublic.events
+    if (presaleContractWS) {
+      presaleContractWS.events
         .TokenClaimed({
           fromBlock: "latest",
         })
@@ -142,11 +147,11 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  }, [presaleContractPublic, fetchTotalDataOnly]);
+  }, [presaleContractWS, fetchTotalDataOnly]);
 
   const subscribeToRefundClaimed = useCallback(async () => {
-    if (presaleContractPublic) {
-      presaleContractPublic.events
+    if (presaleContractWS) {
+      presaleContractWS.events
         .RefundClaimed({
           fromBlock: "latest",
         })
@@ -155,7 +160,7 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  }, [presaleContractPublic, fetchTotalDataOnly]);
+  }, [presaleContractWS, fetchTotalDataOnly]);
 
   useEffect(() => {
     fetchTotalDataOnly();
@@ -163,7 +168,7 @@ export const BusdInformation = forwardRef((props, ref) => {
     subscribeToBUSDDeposited();
     subscribeToTokenClaimed();
     subscribeToRefundClaimed();
-  }, []);
+  }, [presaleContractPublic, presaleContractWS]);
 
   useEffect(() => {
     if (account) {
@@ -172,7 +177,7 @@ export const BusdInformation = forwardRef((props, ref) => {
       setBUSDDep(0);
       setLEMAToClaim(0);
     }
-  }, [account]);
+  }, [account, presaleContract]);
 
   return (
     <div>
