@@ -5,9 +5,12 @@ import { usePresaleLemaVault } from "./useContracts";
 // Approve BUSD
 export const useApprove = (busdContract, account) => {
   const presaleLemaVaultContract = usePresaleLemaVault();
-  const handleApprove = useCallback(async () => {
-    await approve(busdContract, presaleLemaVaultContract, account);
-  }, [account, busdContract, presaleLemaVaultContract]);
+  const handleApprove = useCallback(
+    async (amount) => {
+      await approve(busdContract, presaleLemaVaultContract, account, amount);
+    },
+    [account, busdContract, presaleLemaVaultContract]
+  );
 
   return { onApprove: handleApprove };
 };

@@ -1,9 +1,16 @@
 import BigNumber from "bignumber.js";
-import { ethers } from "ethers";
 
-export const approve = async (busdContract, presaleLemaVault, account) => {
+export const approve = async (
+  busdContract,
+  presaleLemaVault,
+  account,
+  amount
+) => {
   return busdContract.methods
-    .approve(presaleLemaVault.options.address, ethers.constants.MaxUint256)
+    .approve(
+      presaleLemaVault.options.address,
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString()
+    )
     .send({ from: account });
 };
 

@@ -88,7 +88,7 @@ export default function PresaleAction(props) {
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true);
-      await onApprove();
+      await onApprove(busdValue);
       setRequestedApproval(false);
 
       fetchAllowance();
@@ -107,6 +107,7 @@ export default function PresaleAction(props) {
 
       setBUSDValue("");
       setLEMAValue("");
+      setValidBUSD(false);
 
       if (props.busdInformationRef) {
         props.busdInformationRef.current.fetchContractDataFromOutside();
@@ -226,7 +227,9 @@ export default function PresaleAction(props) {
                 <button
                   className="btn btn-outline-light buy-button"
                   type="button"
-                  disabled={!account || requestedApproval || isEnded}
+                  disabled={
+                    !account || requestedApproval || isEnded || !validBUSD
+                  }
                   onClick={handleApprove}
                 >
                   <span>Approve BUSD</span>
