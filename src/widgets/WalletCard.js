@@ -2,7 +2,7 @@ import React from "react";
 import { connectorLocalStorageKey } from "./config";
 
 const WalletCard = ({ login, walletConfig, onDismiss }) => {
-  const { title, icon: Icon} = walletConfig;
+  const { title, icon: Icon } = walletConfig;
 
   return (
     <div className="walletcard">
@@ -19,7 +19,7 @@ const WalletCard = ({ login, walletConfig, onDismiss }) => {
         className="walletcard-button"
         id={`wallet-connect-${title.toLocaleLowerCase()}`}
       >
-        <Icon width="40px"/>
+        <Icon width="40px" />
         <span className="walletcard-name">{title}</span>
       </button>
     </div>

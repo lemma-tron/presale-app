@@ -4,7 +4,7 @@ import {
   getBUSDAddress,
   getLemaTokenAddress,
 } from "../libs/addressHelpers";
-import { useWeb3, useWeb3Public } from "../libs/useWeb3";
+import { useWeb3, useWeb3Public, useWeb3WebSocket } from "../libs/useWeb3";
 
 import busdToken from "../config/abis/BEP20.json";
 import lemaToken from "../config/abis/LemaToken.json";
@@ -21,6 +21,11 @@ const useContractPublic = (abiArtifact, address) => {
   return new web3.eth.Contract(abiArtifact, address);
 };
 
+const useContractWS = (abiArtifact, address) => {
+  const web3 = useWeb3WebSocket();
+  return new web3.eth.Contract(abiArtifact, address);
+};
+
 /**
  * Helper hooks to get specific contracts (by ABI)
  */
@@ -31,6 +36,10 @@ export const usePresaleLema = () => {
 
 export const usePresaleLemaPublic = () => {
   return useContractPublic(presaleLema, getPresaleLemaAddress());
+};
+
+export const usePresaleLemaWS = () => {
+  return useContractWS(presaleLema, getPresaleLemaAddress());
 };
 
 export const usePresaleLemaVault = () => {

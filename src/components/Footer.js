@@ -6,7 +6,7 @@ import {
   faTelegram,
   faMediumM,
   faDiscord,
-  faLinkedin
+  faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {

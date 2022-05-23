@@ -7,7 +7,11 @@ import React, {
 } from "react";
 import { toast } from "react-toastify";
 import { useClaim } from "../hooks/useClaim";
-import { usePresaleLema, usePresaleLemaPublic } from "../hooks/useContracts";
+import {
+  usePresaleLema,
+  usePresaleLemaPublic,
+  usePresaleLemaWS,
+} from "../hooks/useContracts";
 import { useRefund } from "../hooks/useRefund";
 import { formatNumber, getBalanceNumber } from "../libs/formatBalance";
 import { useWeb3React } from "@web3-react/core";
@@ -26,6 +30,7 @@ export const BusdInformation = forwardRef((props, ref) => {
   const [requestedRefund, setRequestedRefund] = useState(false);
   const presaleContract = usePresaleLema();
   const presaleContractPublic = usePresaleLemaPublic();
+  const presaleContractWS = usePresaleLemaWS();
   const { onClaim } = useClaim(presaleContract, account);
   const { onRefund } = useRefund(presaleContract, account);
 
@@ -46,7 +51,7 @@ export const BusdInformation = forwardRef((props, ref) => {
     },
   }));
 
-  const fetchExtraInformation = async () => {
+  const fetchExtraInformation = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.methods.tokenClaimable().call(function (err, res) {
         setIsClaimable(res);
@@ -56,9 +61,9 @@ export const BusdInformation = forwardRef((props, ref) => {
         setIsRefunding(res);
       });
     }
-  };
+  }, [presaleContractPublic]);
 
-  const fetchTotalDataOnly = async () => {
+  const fetchTotalDataOnly = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.methods.busdRaised().call(function (err, res) {
         setBUSDRaised(res);
@@ -72,9 +77,9 @@ export const BusdInformation = forwardRef((props, ref) => {
         setTokenClaimed(res);
       });
     }
-  };
+  }, [presaleContractPublic]);
 
-  const fetchPersonalContractData = async () => {
+  const fetchPersonalContractData = useCallback(async () => {
     if (presaleContract && account) {
       presaleContract.methods
         .presaleBalances(account)
@@ -88,7 +93,7 @@ export const BusdInformation = forwardRef((props, ref) => {
           setLEMAToClaim(res);
         });
     }
-  };
+  }, [presaleContract, account]);
 
   const handleRefund = useCallback(async () => {
     try {
@@ -102,7 +107,7 @@ export const BusdInformation = forwardRef((props, ref) => {
       console.error(e);
       notifyError("Failed to refund !");
     }
-  }, [onRefund]);
+  }, [onRefund, fetchPersonalContractData]);
 
   const handleClaim = useCallback(async () => {
     try {
@@ -116,11 +121,11 @@ export const BusdInformation = forwardRef((props, ref) => {
       console.error(e);
       notifyError("Failed to claim !");
     }
-  }, [onClaim]);
+  }, [onClaim, fetchPersonalContractData]);
 
-  const subscribeToBUSDDeposited = async () => {
-    if (presaleContractPublic) {
-      presaleContractPublic.events
+  const subscribeToBUSDDeposited = useCallback(async () => {
+    if (presaleContractWS) {
+      presaleContractWS.events
         .BUSDDeposited({
           fromBlock: "latest",
         })
@@ -129,11 +134,11 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractWS, fetchTotalDataOnly]);
 
-  const subscribeToTokenClaimed = async () => {
-    if (presaleContractPublic) {
-      presaleContractPublic.events
+  const subscribeToTokenClaimed = useCallback(async () => {
+    if (presaleContractWS) {
+      presaleContractWS.events
         .TokenClaimed({
           fromBlock: "latest",
         })
@@ -142,11 +147,11 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractWS, fetchTotalDataOnly]);
 
-  const subscribeToRefundClaimed = async () => {
-    if (presaleContractPublic) {
-      presaleContractPublic.events
+  const subscribeToRefundClaimed = useCallback(async () => {
+    if (presaleContractWS) {
+      presaleContractWS.events
         .RefundClaimed({
           fromBlock: "latest",
         })
@@ -155,7 +160,7 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractWS, fetchTotalDataOnly]);
 
   useEffect(() => {
     fetchTotalDataOnly();
@@ -163,7 +168,7 @@ export const BusdInformation = forwardRef((props, ref) => {
     subscribeToBUSDDeposited();
     subscribeToTokenClaimed();
     subscribeToRefundClaimed();
-  }, []);
+  }, [presaleContractPublic, presaleContractWS]);
 
   useEffect(() => {
     if (account) {
@@ -172,7 +177,7 @@ export const BusdInformation = forwardRef((props, ref) => {
       setBUSDDep(0);
       setLEMAToClaim(0);
     }
-  }, [account]);
+  }, [account, presaleContract]);
 
   return (
     <div>
@@ -189,9 +194,16 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="lemacount">
             <div>Total LEMA to be distributed</div>
             <div className="custom-font token-count">
-              {lemaToBeDep > 0 ? `~${formatNumber(getBalanceNumber(lemaToBeDep), 3)}`: 0}
+              {lemaToBeDep > 0
+                ? `~${formatNumber(getBalanceNumber(lemaToBeDep), 3)}`
+                : 0}
             </div>
-            <div>LEMA claimed: {tokenClaimed > 0 ? `~${formatNumber(getBalanceNumber(tokenClaimed), 3)}`:0}</div>
+            <div>
+              LEMA claimed:{" "}
+              {tokenClaimed > 0
+                ? `~${formatNumber(getBalanceNumber(tokenClaimed), 3)}`
+                : 0}
+            </div>
           </div>
         </div>
 
@@ -207,7 +219,9 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="row lemacount alignitems-center">
             <div className="col-7">LEMA to claim: </div>
             <div className="col-5 custom-font token-count-personal">
-              {lemaToClaim > 0 ? `~${formatNumber(getBalanceNumber(lemaToClaim), 3)}` : 0}
+              {lemaToClaim > 0
+                ? `~${formatNumber(getBalanceNumber(lemaToClaim), 3)}`
+                : 0}
             </div>
           </div>
           <div>

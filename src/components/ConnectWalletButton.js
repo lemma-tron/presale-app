@@ -16,6 +16,9 @@ import { useWeb3React } from "@web3-react/core";
 
 import { toast } from "react-toastify";
 
+const bscBaseUrl = process.env.REACT_APP_BSC_URL;
+const bscScanUrl = `${bscBaseUrl}/address/`;
+
 const CONNECT_MSG = "Connect Wallet";
 const DEFAULT_SEC_MSG = "Binance Smart Chain";
 const CONNECTED_MSG = "Connected";
@@ -105,7 +108,7 @@ const ConnectWalletButton = () => {
         <div className="wallet-header">
           <span className="text">Connect Wallet</span>
           <button className="close-button" onClick={closeConnectModal}>
-            <img src="/assets/cross.png" />
+            <img src="/assets/cross.png" alt="close button" />
           </button>
         </div>
 
@@ -135,7 +138,7 @@ const ConnectWalletButton = () => {
         <div className="wallet-header">
           <span className="text">Your Wallet</span>
           <button className="close-button" onClick={closeAccountModal}>
-            <img src="/assets/cross.png" />
+            <img src="/assets/cross.png" alt="close button" />
           </button>
         </div>
 
@@ -145,7 +148,7 @@ const ConnectWalletButton = () => {
             <a
               target="_blank"
               rel="noreferrer noopener"
-              href={`https://bscscan.com/address/${account}`}
+              href={`${bscScanUrl}/${account}`}
               className="viewbsc"
             >
               <span>View on BSC</span>

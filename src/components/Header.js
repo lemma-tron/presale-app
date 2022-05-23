@@ -4,7 +4,10 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   return (
-    <nav id="navbar" className="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <nav
+      id="navbar"
+      className="navbar navbar-expand-lg navbar-dark navbar-custom"
+    >
       <img
         className="navbar-brand"
         src="/assets/lema_logo.png"

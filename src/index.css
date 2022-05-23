@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family: 'Chivo', 'Montserrat', 'Rubik', sans-serif;
+  font-family: "Chivo", "Montserrat", "Rubik", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background: linear-gradient(to right, #512DA8, #711e72); */
@@ -19,8 +19,10 @@ button {
   outline: none !important;
 }
 
-a, a:active, a:focus {
-  color: #FFFFFF;
+a,
+a:active,
+a:focus {
+  color: #ffffff;
 }
 
 a:hover {
@@ -32,8 +34,13 @@ p {
   line-height: 24px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family:   'Chivo', 'Montserrat', 'Poppins', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Chivo", "Montserrat", "Poppins", sans-serif;
 }
 
 .h1,
@@ -108,7 +115,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -131,7 +138,7 @@ input[type=number] {
   font-weight: 700;
   letter-spacing: 2px;
   height: auto;
-  font-family: 'Chivo', 'Montserrat', 'Poppins', sans-serif;
+  font-family: "Chivo", "Montserrat", "Poppins", sans-serif;
 }
 
 .navbar-custom .navbar-nav a {
@@ -153,7 +160,12 @@ input[type=number] {
   border: 0;
 }
 
-.navbar-toggler:focus, .navbar-toggler:active:focus, .navbar-toggler.active:focus, .navbar-toggler.focus, .navbar-toggler:active.focus, .navbar-toggler.active.focus {
+.navbar-toggler:focus,
+.navbar-toggler:active:focus,
+.navbar-toggler.active:focus,
+.navbar-toggler.focus,
+.navbar-toggler:active.focus,
+.navbar-toggler.active.focus {
   outline: none !important;
   box-shadow: none;
 }
@@ -173,7 +185,7 @@ input[type=number] {
 }
 
 .presalecountdown .title {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .countdown-row {
@@ -201,11 +213,11 @@ input[type=number] {
 }
 
 .countdown-card .value {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .countdown-card .type {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /*======================
@@ -219,7 +231,12 @@ input[type=number] {
   margin-bottom: 3rem !important;
 }
 
-.presalewallet .btn:focus, .presalewallet .btn:active:focus, .presalewallet .btn.active:focus, .presalewallet .btn.focus, .presalewallet .btn:active.focus, .presalewallet .btn.active.focus {
+.presalewallet .btn:focus,
+.presalewallet .btn:active:focus,
+.presalewallet .btn.active:focus,
+.presalewallet .btn.focus,
+.presalewallet .btn:active.focus,
+.presalewallet .btn.active.focus {
   outline: none !important;
   box-shadow: none;
 }
@@ -276,7 +293,13 @@ input[type=number] {
   padding: 2px;
 }
 
-.presaleaction .input-group .frm:focus, .presaleaction .input-group .frm:active:focus, .presaleaction .input-group .frm.active:focus, .presaleaction .input-group .frm.focus, .presaleaction .input-group .frm:active.focus, .presaleaction .input-group .frm.active.focus, .presaleaction .input-group .frm:disabled {
+.presaleaction .input-group .frm:focus,
+.presaleaction .input-group .frm:active:focus,
+.presaleaction .input-group .frm.active:focus,
+.presaleaction .input-group .frm.focus,
+.presaleaction .input-group .frm:active.focus,
+.presaleaction .input-group .frm.active.focus,
+.presaleaction .input-group .frm:disabled {
   outline: none !important;
   box-shadow: none;
   background: transparent;
@@ -308,40 +331,45 @@ input[type=number] {
   width: 100%;
 }
 
-.presaleaction .buy-button:focus, .presaleaction .buy-button:active:focus, .presaleaction .buy-button.active:focus, .presaleaction .buy-button.focus, .presaleaction .buy-button:active.focus, .presaleaction .buy-button.active.focus {
+.presaleaction .buy-button:focus,
+.presaleaction .buy-button:active:focus,
+.presaleaction .buy-button.active:focus,
+.presaleaction .buy-button.focus,
+.presaleaction .buy-button:active.focus,
+.presaleaction .buy-button.active.focus {
   outline: none !important;
   box-shadow: none;
 }
 
 .presalewallet .btn-outline-light {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #009cef;
 }
 
 .presalewallet .btn-outline-light:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   border-color: #009cef;
   background-color: #009cef;
 }
 
 .presalewallet .btn-outline-light:active {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #009cef;
 }
 
 .presaleaction .buy-button {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #3bbc01;
 }
 
 .presaleaction .buy-button:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #3bbc01;
   border-color: #3bbc01;
 }
 
 .presaleaction .buy-button:active {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #3bbc01;
 }
 
@@ -351,31 +379,31 @@ input[type=number] {
 }
 
 .presaleaction .input-group {
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: 2px solid #ffffff;
 }
 
 .presaleaction .input-group input {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .presaleaction .input-group input:focus {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .presaleaction .input-group input::placeholder {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .exchange-icon {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .input-group span {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .current-lema-rate {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 @media screen and (max-width: 768px) {
@@ -428,13 +456,18 @@ input[type=number] {
   margin: 10px;
 }
 
-.busdinformation-content-2 .claim-button:focus, .busdinformation-content-2 .claim-button:active:focus, .busdinformation-content-2 .claim-button.active:focus, .busdinformation-content-2 .claim-button.focus, .busdinformation-content-2 .claim-button:active.focus, .busdinformation-content-2 .claim-button.active.focus {
+.busdinformation-content-2 .claim-button:focus,
+.busdinformation-content-2 .claim-button:active:focus,
+.busdinformation-content-2 .claim-button.active:focus,
+.busdinformation-content-2 .claim-button.focus,
+.busdinformation-content-2 .claim-button:active.focus,
+.busdinformation-content-2 .claim-button.active.focus {
   outline: none !important;
   box-shadow: none;
 }
 
 .busdinformation {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .busdinformation-content-2 {
@@ -443,18 +476,18 @@ input[type=number] {
 }
 
 .busdinformation-content-2 .claim-button {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #3bbc01;
 }
 
 .busdinformation-content-2 .claim-button:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #3bbc01;
   border-color: #3bbc01;
 }
 
 .busdinformation-content-2 .claim-button:active {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #3bbc01;
 }
 
@@ -485,7 +518,7 @@ input[type=number] {
 .presaleinformation {
   background-color: rgba(122, 130, 139, 0.1);
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /*======================
@@ -511,8 +544,10 @@ input[type=number] {
   margin-bottom: 5px;
 }
 
-.contract .address a, .contract .address a:active, .contract .address a:focus {
-  color: #009CEF;
+.contract .address a,
+.contract .address a:active,
+.contract .address a:focus {
+  color: #009cef;
 }
 
 .contract .address a:hover {
@@ -530,11 +565,11 @@ input[type=number] {
 }
 
 .contract .title {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .copy_address {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .copy_address:hover {
@@ -589,18 +624,19 @@ footer .logo {
 }
 
 .footer span {
-  color: #FFFFFF;
+  color: #ffffff;
 }
-
 
 /*======================
   Connect Wallet Modal
   ======================*/
 
-.connectModal, .accountModal {
+.connectModal,
+.accountModal {
   overflow: hidden;
   background: rgb(255, 255, 255);
-  box-shadow: rgb(14 14 44 / 10%) 0px 20px 36px -8px, rgb(0 0 0 / 5%) 0px 1px 1px;
+  box-shadow: rgb(14 14 44 / 10%) 0px 20px 36px -8px,
+    rgb(0 0 0 / 5%) 0px 1px 1px;
   border: 1px solid rgb(231, 227, 235);
   border-radius: 20px;
   width: 100%;
@@ -613,19 +649,24 @@ footer .logo {
   margin: 0px;
 }
 
-.connectModalOverlay, .accountModalOverlay {
+.connectModalOverlay,
+.accountModalOverlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(95, 43, 185, 0.3)
+  background: rgba(95, 43, 185, 0.3);
 }
 
 .wallet-header {
   -webkit-box-align: center;
   align-items: center;
-  background: linear-gradient(139.73deg, rgb(229, 253, 255) 0%, rgb(243, 239, 255) 100%);
+  background: linear-gradient(
+    139.73deg,
+    rgb(229, 253, 255) 0%,
+    rgb(243, 239, 255) 100%
+  );
   border-bottom: 1px solid rgb(231, 227, 235);
   display: flex;
   padding: 20px 24px;
@@ -716,7 +757,8 @@ footer .logo {
   column-gap: 20px;
 }
 
-.accountWalletCardDiv .account-detail .viewbsc, .accountWalletCardDiv .account-detail .copyAddress {
+.accountWalletCardDiv .account-detail .viewbsc,
+.accountWalletCardDiv .account-detail .copyAddress {
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -729,7 +771,8 @@ footer .logo {
   cursor: pointer;
 }
 
-.accountWalletCardDiv .account-detail .viewbsc:hover, .accountWalletCardDiv .account-detail .copyAddress:hover {
+.accountWalletCardDiv .account-detail .viewbsc:hover,
+.accountWalletCardDiv .account-detail .copyAddress:hover {
   opacity: 0.6;
 }
 

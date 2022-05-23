@@ -1,5 +1,5 @@
 export const ConnectorNames = {
-    Injected: "injected",
-    WalletConnect: "walletconnect",
-    BSC: "bsc",
-  }
+  Injected: "injected",
+  WalletConnect: "walletconnect",
+  BSC: "bsc",
+};

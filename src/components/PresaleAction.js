@@ -10,6 +10,7 @@ import {
   useBUSDToken,
   usePresaleLema,
   usePresaleLemaVault,
+  usePresaleLemaWS,
 } from "../hooks/useContracts";
 import { useDeposit } from "../hooks/useDeposit";
 import { isNumeric } from "../libs/validateBUSD";
@@ -21,13 +22,14 @@ export default function PresaleAction(props) {
   const [validBUSD, setValidBUSD] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
-  const [lemaValue, setLEMAValue] = useState('');
-  const [busdValue, setBUSDValue] = useState('');
+  const [lemaValue, setLEMAValue] = useState("");
+  const [busdValue, setBUSDValue] = useState("");
   const [lemaPrice, setLemaPrice] = useState(0.0005);
   const busdContract = useBUSDToken();
   const presaleContract = usePresaleLema();
+  const presaleContractWS = usePresaleLemaWS();
   const presaleLemaVaultContract = usePresaleLemaVault();
-  
+
   const { account } = useWeb3React();
   const { onApprove } = useApprove(busdContract, account);
   const { onDeposit } = useDeposit(presaleContract, account);
@@ -40,7 +42,7 @@ export default function PresaleAction(props) {
       closeOnClick: true,
     });
 
-  const fetchAllowance = async () => {
+  const fetchAllowance = useCallback(async () => {
     if (busdContract && account) {
       const res = await busdContract.methods
         .allowance(account, presaleLemaVaultContract.options.address)
@@ -48,17 +50,17 @@ export default function PresaleAction(props) {
       const allowance = new BigNumber(res);
       setIsApproved(account && allowance && allowance.isGreaterThan(0));
     }
-  };
+  }, [busdContract, account, presaleLemaVaultContract]);
 
-  const getCurrentLemaPrice = async () => {
+  const getCurrentLemaPrice = useCallback(async () => {
     if (presaleContract) {
       presaleContract.methods.getPrice().call(function (err, price) {
         setLemaPrice(getBalanceNumber(price));
       });
     }
-  };
+  }, [presaleContract]);
 
-  const checkPresaleIsEnded = async () => {
+  const checkPresaleIsEnded = useCallback(async () => {
     if (presaleContract) {
       presaleContract.methods.isEnded().call(function (err, res) {
         setIsEnded(res);
@@ -68,11 +70,11 @@ export default function PresaleAction(props) {
         }
       });
     }
-  };
+  }, [presaleContract, props.busdInformationRef]);
 
-  const subscribeToFinalized = async () => {
-    if (presaleContract) {
-      presaleContract.events
+  const subscribeToFinalized = useCallback(async () => {
+    if (presaleContractWS) {
+      presaleContractWS.events
         .Finalized({
           fromBlock: "latest",
         })
@@ -81,7 +83,7 @@ export default function PresaleAction(props) {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractWS, checkPresaleIsEnded]);
 
   const handleApprove = useCallback(async () => {
     try {
@@ -95,7 +97,7 @@ export default function PresaleAction(props) {
       console.error(e);
       notifyError("Failed to approve !");
     }
-  }, [onApprove]);
+  }, [onApprove, fetchAllowance]);
 
   const handleDeposit = useCallback(async () => {
     try {
@@ -103,8 +105,8 @@ export default function PresaleAction(props) {
       await onDeposit(busdValue);
       setRequestedDeposit(false);
 
-      setBUSDValue('');
-      setLEMAValue('');
+      setBUSDValue("");
+      setLEMAValue("");
 
       if (props.busdInformationRef) {
         props.busdInformationRef.current.fetchContractDataFromOutside();
@@ -114,17 +116,17 @@ export default function PresaleAction(props) {
       console.error(e);
       notifyError("Failed to deposit !");
     }
-  }, [onDeposit]);
+  }, [onDeposit, busdValue, props.busdInformationRef]);
 
   useEffect(() => {
     checkPresaleIsEnded();
     getCurrentLemaPrice();
     subscribeToFinalized();
-  }, []);
+  }, [presaleContract, presaleContractWS]);
 
   useEffect(() => {
     fetchAllowance();
-  }, [account]);
+  }, [account, busdContract, presaleLemaVaultContract]);
 
   const handleInputSelect = async (e) => {
     e.preventDefault();
@@ -140,7 +142,7 @@ export default function PresaleAction(props) {
       setValidBUSD(true);
     } else {
       setValidBUSD(false);
-      setLEMAValue('');
+      setLEMAValue("");
     }
   };
 
@@ -155,7 +157,11 @@ export default function PresaleAction(props) {
         </div>
         <div className="col-md-9 presaledeposit">
           <div className="current-lema-rate">
-            Current Price 1 BUSD ≈ {lemaPrice ? formatNumber(1/lemaPrice, 3) : formatNumber(1/0.0005, 3)} LEMA
+            Current Price 1 BUSD ≈{" "}
+            {lemaPrice
+              ? formatNumber(1 / lemaPrice, 3)
+              : formatNumber(1 / 0.0005, 3)}{" "}
+            LEMA
           </div>
           <div className="row alignitems-center presaleaction-card">
             <div className="col-md-9 presale-transaction">
