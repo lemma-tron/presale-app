@@ -9,7 +9,8 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
-const bscScanUrl = "https://www.bscscan.com/address/";
+const bscBaseUrl = process.env.REACT_APP_BSC_URL;
+const bscScanUrl = `${bscBaseUrl}/address/`;
 
 export default function ContractInformation() {
   const notifyCopied = () =>
