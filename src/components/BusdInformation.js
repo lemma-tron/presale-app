@@ -46,7 +46,7 @@ export const BusdInformation = forwardRef((props, ref) => {
     },
   }));
 
-  const fetchExtraInformation = async () => {
+  const fetchExtraInformation = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.methods.tokenClaimable().call(function (err, res) {
         setIsClaimable(res);
@@ -56,9 +56,9 @@ export const BusdInformation = forwardRef((props, ref) => {
         setIsRefunding(res);
       });
     }
-  };
+  }, [presaleContractPublic]);
 
-  const fetchTotalDataOnly = async () => {
+  const fetchTotalDataOnly = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.methods.busdRaised().call(function (err, res) {
         setBUSDRaised(res);
@@ -72,9 +72,9 @@ export const BusdInformation = forwardRef((props, ref) => {
         setTokenClaimed(res);
       });
     }
-  };
+  }, [presaleContractPublic]);
 
-  const fetchPersonalContractData = async () => {
+  const fetchPersonalContractData = useCallback(async () => {
     if (presaleContract && account) {
       presaleContract.methods
         .presaleBalances(account)
@@ -88,7 +88,7 @@ export const BusdInformation = forwardRef((props, ref) => {
           setLEMAToClaim(res);
         });
     }
-  };
+  }, [presaleContract, account]);
 
   const handleRefund = useCallback(async () => {
     try {
@@ -102,7 +102,7 @@ export const BusdInformation = forwardRef((props, ref) => {
       console.error(e);
       notifyError("Failed to refund !");
     }
-  }, [onRefund]);
+  }, [onRefund, fetchPersonalContractData]);
 
   const handleClaim = useCallback(async () => {
     try {
@@ -116,9 +116,9 @@ export const BusdInformation = forwardRef((props, ref) => {
       console.error(e);
       notifyError("Failed to claim !");
     }
-  }, [onClaim]);
+  }, [onClaim, fetchPersonalContractData]);
 
-  const subscribeToBUSDDeposited = async () => {
+  const subscribeToBUSDDeposited = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.events
         .BUSDDeposited({
@@ -129,9 +129,9 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractPublic, fetchTotalDataOnly]);
 
-  const subscribeToTokenClaimed = async () => {
+  const subscribeToTokenClaimed = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.events
         .TokenClaimed({
@@ -142,9 +142,9 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractPublic, fetchTotalDataOnly]);
 
-  const subscribeToRefundClaimed = async () => {
+  const subscribeToRefundClaimed = useCallback(async () => {
     if (presaleContractPublic) {
       presaleContractPublic.events
         .RefundClaimed({
@@ -155,7 +155,7 @@ export const BusdInformation = forwardRef((props, ref) => {
         })
         .on("error", console.error);
     }
-  };
+  }, [presaleContractPublic, fetchTotalDataOnly]);
 
   useEffect(() => {
     fetchTotalDataOnly();
@@ -189,9 +189,16 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="lemacount">
             <div>Total LEMA to be distributed</div>
             <div className="custom-font token-count">
-              {lemaToBeDep > 0 ? `~${formatNumber(getBalanceNumber(lemaToBeDep), 3)}`: 0}
+              {lemaToBeDep > 0
+                ? `~${formatNumber(getBalanceNumber(lemaToBeDep), 3)}`
+                : 0}
             </div>
-            <div>LEMA claimed: {tokenClaimed > 0 ? `~${formatNumber(getBalanceNumber(tokenClaimed), 3)}`:0}</div>
+            <div>
+              LEMA claimed:{" "}
+              {tokenClaimed > 0
+                ? `~${formatNumber(getBalanceNumber(tokenClaimed), 3)}`
+                : 0}
+            </div>
           </div>
         </div>
 
@@ -207,7 +214,9 @@ export const BusdInformation = forwardRef((props, ref) => {
           <div className="row lemacount alignitems-center">
             <div className="col-7">LEMA to claim: </div>
             <div className="col-5 custom-font token-count-personal">
-              {lemaToClaim > 0 ? `~${formatNumber(getBalanceNumber(lemaToClaim), 3)}` : 0}
+              {lemaToClaim > 0
+                ? `~${formatNumber(getBalanceNumber(lemaToClaim), 3)}`
+                : 0}
             </div>
           </div>
           <div>

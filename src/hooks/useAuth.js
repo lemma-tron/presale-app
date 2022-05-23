@@ -17,13 +17,16 @@ import { setupNetwork } from "../libs/wallet";
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React();
 
-  const notifyError = (message) =>
-    toast.error(message, {
-      position: "top-left",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-    });
+  const notifyError = useCallback(
+    (message) =>
+      toast.error(message, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+      }),
+    []
+  );
 
   const login = useCallback(
     (connectorID) => {
