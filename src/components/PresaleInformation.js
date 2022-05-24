@@ -7,15 +7,15 @@ export default function PresaleInformation() {
       <div className="presaleinformation">
         <h1 className="title custom-font">Private Sale Information</h1>
         <ul>
-          <li>Start Time = May 20, 2022 (12:00 AM UTC).</li>
-          <li>
-            End Time = May 31, 2022 (12:00 AM UTC). <i>[Subject to change]</i>
-          </li>
+          <li>Start Time = May 25, 2022 (12:00 AM UTC).</li>
+          <li>End Time = May 30, 2022 (12:00 AM UTC).</li>
           <li>Soft Cap = $0</li>
           <li>
-            Hard Cap = $450,000 or 600,000,000 LEMA. <br />
-            If this goal is not met within the private sale deadline, the
-            remaining tokens will be burnt.
+            Hard Cap = 600,000,000 LEMA. <br />
+            <i>
+              The remaining tokens will be allocation for the seed round
+              funding.
+            </i>
           </li>
           <li>Commitment should be done in BUSD.</li>
           <li>There is no minimum or maximum amount to commit.</li>
@@ -37,11 +37,18 @@ export default function PresaleInformation() {
           </ul> */}
           <li>
             Private sale LEMA tokens will be claimable after vesting. See
-            schedule in our tokenomics. Stay tuned to our social media for
-            updates. Links in the footer.
+            schedule in our tokenomics{" "}
+            <a
+              href="https://www.lemmatron.com/assets/images/tokenomics.png"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <u>here</u>
+            </a>
+            .
           </li>
           <li>
-            The price at which your commitment will execute depends on the days
+            The price at which your commitment executes depends on the time
             since the start of the presale which is illustrated by the figure
             below:
           </li>
