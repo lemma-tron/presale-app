@@ -9,7 +9,7 @@ export const approve = async (
   return busdContract.methods
     .approve(
       presaleLemaVault.options.address,
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString()
+      new BigNumber(amount).times(new BigNumber(10).pow(18))
     )
     .send({ from: account });
 };
@@ -20,9 +20,7 @@ export const buyTokensWithBUSD = async (
   account
 ) => {
   return persaleLemaContract.methods
-    .buyTokensWithBUSD(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString()
-    )
+    .buyTokensWithBUSD(new BigNumber(amount).times(new BigNumber(10).pow(18)))
     .send({ from: account });
 };
 
