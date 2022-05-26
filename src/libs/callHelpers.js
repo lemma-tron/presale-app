@@ -1,15 +1,12 @@
-import BigNumber from "bignumber.js";
-import scientificToDecimal from "scientific-to-decimal";
-
 export const approve = async (
   busdContract,
   presaleLemaVault,
   account,
   amount
 ) => {
-  const value = scientificToDecimal(
-    new BigNumber(amount).times(new BigNumber(10).pow(18))
-  );
+  const value = (amount * 1e18).toLocaleString("fullwide", {
+    useGrouping: false,
+  });
   return busdContract.methods
     .approve(presaleLemaVault.options.address, value)
     .send({ from: account });
@@ -20,9 +17,9 @@ export const buyTokensWithBUSD = async (
   amount,
   account
 ) => {
-  const value = scientificToDecimal(
-    new BigNumber(amount).times(new BigNumber(10).pow(18))
-  );
+  const value = (amount * 1e18).toLocaleString("fullwide", {
+    useGrouping: false,
+  });
   return persaleLemaContract.methods
     .buyTokensWithBUSD(value)
     .send({ from: account });
