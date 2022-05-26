@@ -445,6 +445,7 @@ input[type="number"] {
 
 .token-count-personal {
   font-size: 1em;
+  word-break: break-word;
 }
 
 .busdinformation-content-2 .claim-button {
